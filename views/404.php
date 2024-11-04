@@ -6,6 +6,6 @@
     <title>Accueil</title>
 </head>
 <body>
-    <h1> Error 404 cette page n'existe pas</h1>
+    <h1> Je crois que tu t'es trompé de chemin</h1>
 </body>
 </html>

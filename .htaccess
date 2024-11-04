@@ -1,3 +1,3 @@
 RewriteEngine On
-RewriteBase /DemoMVCAlpha/
+RewriteBase /DongeonXplorer/
 RewriteRule ^(.*)$ index.php [QSA,L]

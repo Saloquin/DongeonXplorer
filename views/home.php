@@ -6,6 +6,7 @@
     <title>Dongeon Xplorer</title>
 </head>
 <body>
-    <h1> Bienvenue sur le site Dongeon Xplorer</h1>
+    <h1> Bienvenue sur le site Dongeon Xplorer
+    </h1>
 </body>
 </html>
