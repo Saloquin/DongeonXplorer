@@ -6,6 +6,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <script defer src="https://cdn.tailwindcss.com"></script>
     <title><?php echo $chapter->getTitle(); ?></title>
 </head>
 <body>
