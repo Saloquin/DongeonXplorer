@@ -139,6 +139,14 @@ CREATE TABLE Quest (
 );
 
 
+
+CREATE TABLE IF NOT EXISTS User (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(50) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+=======
 --Création des classes 
 INSERT INTO Class (name, description, base_pv, base_mana, strength, initiative, max_items)
 VALUES 
@@ -169,3 +177,4 @@ VALUES
 INSERT INTO Loot (name, item_id, quantity)
 VALUES 
 ('Croc de Loup Noir', NULL, 1);  -- Remplacez NULL par l'ID de l'objet dans la table Items si disponible
+

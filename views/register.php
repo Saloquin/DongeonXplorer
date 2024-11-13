@@ -17,7 +17,7 @@
             <p class="text-center text-sm text-gray-400 italic mb-6">Créer un compte pour commencer votre aventure</p>
 
             <!-- Registration Form -->
-            <form action="register.php" method="POST" class="space-y-4">
+            <form action="register" method="POST" class="space-y-4">
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-400 mb-1">Nom d'utilisateur :</label>
                     <input type="text" id="username" name="username" required

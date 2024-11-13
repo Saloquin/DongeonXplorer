@@ -1,6 +1,5 @@
 <?php
 session_start();
-require_once("pdo.php");
 
 // Vérifie si le pseudo est défini
 if (isset($_POST['pseudo'])) {
