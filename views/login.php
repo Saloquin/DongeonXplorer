@@ -17,7 +17,7 @@
             <p class="text-center text-sm text-gray-400 italic mb-6">Connexion à votre compte</p>
 
             <!-- Login Form -->
-            <form action="login.php" method="POST" class="space-y-4">
+            <form action="login" method="POST" class="space-y-4">
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-400 mb-1">Nom d'utilisateur :</label>
                     <input type="text" id="username" name="username" required
@@ -44,13 +44,6 @@
             <!-- Subtitle or Decorative Text -->
             <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Account Login</p>
         </div>
-    </div>
-    <div class="text-center">
-        <button onclick="openLogPopup()"
-                class="relative inline-flex items-center px-8 py-3 font-bold text-gray-900 uppercase tracking-widest bg-yellow-500 border-2 border-yellow-600 rounded-lg shadow-md transform hover:scale-105 hover:bg-yellow-600 hover:text-yellow-100 focus:outline-none transition-all duration-200 ease-in-out">
-            <span class="absolute inset-0 w-full h-full bg-gradient-to-br from-yellow-500 to-yellow-700 opacity-20 rounded-lg transform -rotate-2"></span>
-            <span class="relative z-10">Log in</span>
-        </button>
     </div>
     <script>
         function closeLogPopup() {

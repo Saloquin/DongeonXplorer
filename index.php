@@ -1,4 +1,7 @@
 <?php
+DEFINE('DIR_ROOT', dirname(__FILE__));
+DEFINE('URL_ROOT', 'http://127.0.0.1/DongeonXplorer');
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -8,7 +11,8 @@ require 'autoload.php';
 
 class Router
 {
-    private $routes = [];
+    private $getRoutes = [];
+    private $postRoutes = [];
     private $prefix;
 
     public function __construct($prefix = '')
@@ -16,9 +20,14 @@ class Router
         $this->prefix = trim($prefix, '/');
     }
 
-    public function addRoute($uri, $controllerMethod)
+    public function addRouteGet($uri, $controllerMethod)
     {
-        $this->routes[trim($uri, '/')] = $controllerMethod;
+        $this->getRoutes[trim($uri, '/')] = $controllerMethod;
+    }
+
+    public function addRoutePost($uri, $controllerMethod)
+    {
+        $this->postRoutes[trim($uri, '/')] = $controllerMethod;
     }
 
     public function route($url)
@@ -31,8 +40,11 @@ class Router
         // Enlève les barres obliques en trop
         $url = trim($url, '/');
 
+        $method = $_SERVER['REQUEST_METHOD'];
+        $routes = $method === 'POST' ? $this->postRoutes : $this->getRoutes;
+
         // Vérification de la correspondance de l'URL à une route définie
-        foreach ($this->routes as $route => $controllerMethod) {
+        foreach ($routes as $route => $controllerMethod) {
             // Vérifie si l'URL correspond à une route avec des paramètres
             $routeParts = explode('/', $route);
             $urlParts = explode('/', $url);
@@ -70,13 +82,17 @@ class Router
 }
 
 
+
 // Instanciation du routeur
 $router = new Router('DongeonXplorer');
 
 // Ajout des routes
-$router->addRoute('', 'HomeController@index'); // Pour la racine
-$router->addRoute('chapter/{id}', 'ChapterController@show'); // Pour afficher une tâche par ID
-$router->addRoute('login', 'LoginController@index'); // Pour afficher une tâche par ID$
-$router->addRoute('register', 'RegisterController@index'); // Pour afficher une tâche par ID
+$router->addRouteGet('', 'HomeController@index');
+$router->addRouteGet('chapter/{id}', 'ChapterController@show');
+$router->addRouteGet('login', 'LoginController@index'); 
+$router->addRoutePost('login', 'LoginController@login'); 
+//register
+$router->addRouteGet('register', 'RegisterController@index'); 
+$router->addRoutePost('register', 'RegisterController@register'); 
 // Appel de la méthode route
 $router->route(trim($_SERVER['REQUEST_URI'], '/'));
