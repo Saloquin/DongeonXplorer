@@ -137,3 +137,35 @@ CREATE TABLE Quest (
     FOREIGN KEY (hero_id) REFERENCES Hero(id),
     FOREIGN KEY (chapter_id) REFERENCES Chapter(id)
 );
+
+
+--Création des classes 
+INSERT INTO Class (name, description, base_pv, base_mana, strength, initiative, max_items)
+VALUES 
+('Guerrier', 'Un combattant robuste et puissant, spécialisé dans le combat au corps à corps.', 30, 0, 25, 12, 6);
+
+INSERT INTO Class (name, description, base_pv, base_mana, strength, initiative, max_items)
+VALUES 
+('Mage', 'Un expert des arts magiques, utilisant une grande quantité de mana pour lancer des sorts puissants.', 25, 150, 8, 14, 3);
+
+INSERT INTO Class (name, description, base_pv, base_mana, strength, initiative, max_items)
+VALUES 
+('Voleur', 'Un voleur agile et discret, capable de frapper rapidement et de s’échapper.', 20, 10, 15, 20, 5);
+
+--Création des monstres
+INSERT INTO Monster (name, pv, mana, initiative, strength, attack, loot_id, xp)
+VALUES 
+('Sanglier', 50, 0, 10, 12, 'Charge puissante', 'Cuir de Sanglier', 15);
+
+INSERT INTO Monster (name, pv, mana, initiative, strength, attack, loot_id, xp)
+VALUES 
+('Loup Noir', 40, 5, 15, 10, 'Morsure vicieuse', 'Croc de Loup Noir', 20);
+
+--Création des loots
+INSERT INTO Loot (name, item_id, quantity)
+VALUES 
+('Cuir de Sanglier', NULL, 1);-- Remplacez NULL par l'ID de l'objet dans la table Items si disponible
+
+INSERT INTO Loot (name, item_id, quantity)
+VALUES 
+('Croc de Loup Noir', NULL, 1);  -- Remplacez NULL par l'ID de l'objet dans la table Items si disponible
