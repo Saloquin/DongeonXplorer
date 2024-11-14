@@ -87,7 +87,7 @@ class Router
 $router = new Router('DongeonXplorer');
 
 // Ajout des routes
-/*
+
 $router->addRouteGet('', 'HomeController@index');
 $router->addRouteGet('chapter/{id}', 'ChapterController@show');
 $router->addRouteGet('login', 'LoginController@index'); 
@@ -96,11 +96,6 @@ $router->addRoutePost('login', 'LoginController@login');
 $router->addRouteGet('register', 'RegisterController@index'); 
 $router->addRoutePost('register', 'RegisterController@register'); 
 
-$router->addRoute('', 'HomeController@index'); // Pour la racine
-$router->addRoute('chapter/{id}', 'ChapterController@show'); // Pour afficher une tâche par ID
-$router->addRoute('login', 'LoginController@index'); // Pour afficher une tâche par ID$
-$router->addRoute('register', 'RegisterController@index'); // Pour afficher une tâche par ID
-$router->addRoute('player_selection', 'Player_selectionController@index'); // Pour afficher une tâche par ID
-*/
+
 // Appel de la méthode route
 $router->route(trim($_SERVER['REQUEST_URI'], '/'));
