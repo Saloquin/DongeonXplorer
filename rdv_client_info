@@ -1,0 +1,23 @@
+profile : nom, prenom adresse mail, lien personnage, supprimer son compte
+auth page : variable session/cookie
+mort -> recommencer au chapitre 1 ( sans items et argent mais avec experience)
+items ( arme, armure) : poids, description, arme : dégat, estequipé : armure : protection ( compensation et équilibrage !!)
+attaque 2 arme ou equiper bouclier ( baisser initiative)
+possibilité items tous les champs + type ( arme, armure, potion) => champs null
+loot => prédefini (coherence) => v2 aléatoire
+loot => soit trésor soit créature
+chaque chapitre (plusieurs choix) => proposer choix conditionnel ( exemple si voleur on peut se dissimuler pour eviter les monstres)
+evenements pas combat => sol est entrain de ce dérobé=> test pour réussir ou non
+combat : attaquer, consommer une option ( griser si pas de potion), fuite ( inf 15 mais pas de loot de la piece ou mobe)
+inventaire pendant le combat ?
+animation pendant combat ( visuel sympa) => 3 points design seulement !!
+guerrier : 30 no mana
+voleur :20 10mana => peut pas regenerer mana => sort : dissimulation qui coute du mana
+mage : 20 30mana => regeneration de mana possible => sort offensif/défensif/soin
+potion : soin, mana, force
+combat => 2arme => -initiative mais 1.5x dégat
+combat => bouclier=> -initiiative => +defense
+jeter de dés => libraire javascript( random +dé visuel) ?
+coffre pieger/cacher
+système enigme
+système de marchand avec boutique

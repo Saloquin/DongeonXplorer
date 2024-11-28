@@ -1,4 +1,6 @@
 <?php
+
+require_once("/DongeonXplorer/bdd/Database.php");
 class Consumable extends Item {
     private $soin;
     private $mana;

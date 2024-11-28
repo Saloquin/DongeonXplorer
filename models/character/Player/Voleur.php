@@ -1,4 +1,6 @@
 <?php
+
+require_once("/DongeonXplorer/bdd/Database.php");
 class Voleur extends Classe {
     public function __construct() {
         $tab= array();

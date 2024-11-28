@@ -1,4 +1,6 @@
 <?php
+
+require_once("/DongeonXplorer/bdd/Database.php");
 class Armor extends Item {
     private $initiative;
     private $defense;

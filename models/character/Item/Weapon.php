@@ -1,4 +1,6 @@
 <?php
+
+require_once("/DongeonXplorer/bdd/Database.php");
 class Weapon extends Item {
     private $damage;
     private $defense;
