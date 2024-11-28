@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dongeon Xplorer - Register Pop-up</title>
+    <title>Dongeon Xplorer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="/DongeonXplorer/Images/icon/Logo.ico" type="image/x-icon">
     <script>
@@ -81,16 +81,16 @@
             <!-- Buttons -->
             <div class="flex space-x-4 mt-6 justify-center">
                 <button type="submit" class="bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded hover:bg-yellow-600 focus:outline-none">
-                    Register
+                    S'inscrire
                 </button>
                 <button type="button" class="bg-gray-700 text-gray-300 font-bold py-2 px-4 rounded hover:bg-gray-600 focus:outline-none" onclick="closeRegPopup()">
-                    Cancel
+                    Annuler
                 </button>
             </div>
         </form>
 
         <!-- Subtitle or Decorative Text -->
-        <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Account Creation</p>
+        <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Création du compte</p>
     </div>
 
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once("Database.php");
 
 // Vérifie si le pseudo est défini
 if (isset($_POST['pseudo'])) {

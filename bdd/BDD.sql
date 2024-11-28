@@ -51,7 +51,7 @@ CREATE TABLE Monster (
 
 -- Création de la table Hero (Personnage principal)
 CREATE TABLE Hero (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_hero INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     class_id INT, -- Relation avec Class
     image VARCHAR(255),
@@ -72,7 +72,7 @@ CREATE TABLE Hero (
 
 -- Création de la table Level (Niveaux de progression des classes)
 CREATE TABLE Level (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_level INT AUTO_INCREMENT PRIMARY KEY,
     class_id INT, -- Relation avec Class
     level INT NOT NULL,
     required_xp INT NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE Encounter (
 
 -- Table intermédiaire pour l'inventaire des héros (Hero - Items)
 CREATE TABLE Inventory (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_inventory INT AUTO_INCREMENT PRIMARY KEY,
     hero_id INT,
     item_id INT,
     FOREIGN KEY (hero_id) REFERENCES Hero(id),
@@ -131,7 +131,7 @@ CREATE TABLE Chapter_Treasure (
 
 -- Table intermédiaire pour les quêtes des héros (Hero - Chapter)
 CREATE TABLE Quest (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_quest INT AUTO_INCREMENT PRIMARY KEY,
     hero_id INT,
     chapter_id INT,
     FOREIGN KEY (hero_id) REFERENCES Hero(id),
@@ -141,12 +141,13 @@ CREATE TABLE Quest (
 
 
 CREATE TABLE IF NOT EXISTS User (
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_user INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(50) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-=======
+
+
 --Création des classes 
 INSERT INTO Class (name, description, base_pv, base_mana, strength, initiative, max_items)
 VALUES 

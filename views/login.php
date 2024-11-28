@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dongeon Xplorer - Login Pop-up</title>
+    <title>Dongeon Xplorer</title>
     <link rel="icon" href="/DongeonXplorer/Images/icon/Logo.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,17 +30,6 @@
         };
     </script>
 </head>
-
-<body class="bg-primary flex items-center justify-center h-screen font-body">
-    <!DOCTYPE html>
-    <html lang="fr">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DungeonXplorer</title>
-        <!-- Ajouter ici les liens vers tes fichiers CSS -->
-    </head>
 
     <body class="bg-primary text-white">
 
@@ -98,7 +87,7 @@
                         <!-- Boutons -->
                         <div class="flex space-x-4 mt-6 justify-center">
                             <button type="submit" class="bg-yellow-500 text-gray-900 font-bold py-2 px-4 rounded hover:bg-yellow-600 focus:outline-none">
-                                Login
+                                Connexion
                             </button>
                             <button type="button" class="bg-gray-700 text-gray-300 font-bold py-2 px-4 rounded hover:bg-gray-600 focus:outline-none">
                                 Annuler
@@ -107,7 +96,7 @@
                     </form>
 
                     <!-- Texte décoratif ou sous-titre -->
-                    <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Account Login</p>
+                    <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Connexion au compte</p>
                 </div>
             </div>
 
