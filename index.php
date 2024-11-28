@@ -87,7 +87,9 @@ class Router
 $router = new Router('DongeonXplorer');
 
 // Ajout des routes
-
+$router->addRouteGet('profil', 'ProfilController@index');
+$router->addRouteGet('player_selection', 'Player_selectionController@index');
+$router->addRouteGet('home', 'HomeController@index');
 $router->addRouteGet('', 'HomeController@index');
 $router->addRouteGet('chapter/{id}', 'ChapterController@show');
 $router->addRouteGet('login', 'LoginController@index'); 
