@@ -16,43 +16,42 @@ CREATE or replace TABLE User (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE or replace TABLE Item (
-    item_id INT AUTO_INCREMENT PRIMARY KEY,
-    object_id INT NOT NULL,
-    item_type ENUM('armor', 'weapon', 'consumable'),
-    item_name VARCHAR(50) NOT NULL,
-    description TEXT
-);
-
-CREATE or replace TABLE NPC (
-    npc_id INT AUTO_INCREMENT PRIMARY KEY,
-    npc_name VARCHAR(50) NOT NULL,
-    npc_description TEXT
-);
-
 CREATE or replace TABLE Chapter (
     chapter_id INT AUTO_INCREMENT PRIMARY KEY,
     content TEXT NOT NULL,
     image VARCHAR(255)
 );
+
+CREATE or replace TABLE Item (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    object_id INT NOT NULL,
+    item_name VARCHAR(50) NOT NULL,
+    item_description TEXT
+);
 CREATE or replace TABLE armor (
     armor_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_id INT UNIQUE NOT NULL,
     defense INT,
-    initiative INT
+    initiative INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
 );
 
 CREATE or replace TABLE weapon (
     weapon_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_id INT UNIQUE NOT NULL,
     damage INT,
     defense INT,
     mana INT,
-    isTwoHanded BOOLEAN
+    isTwoHanded BOOLEAN,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
 );
 
 CREATE or replace TABLE consumable (
     consumable_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_id INT UNIQUE NOT NULL,
     health INT,
-    mana INT
+    mana INT,
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
 );
 CREATE or replace TABLE Treasure (
     treasure_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -71,8 +70,22 @@ CREATE or replace TABLE Loot (
     FOREIGN KEY (item_id) REFERENCES Item(item_id)
 );
 
+CREATE or replace TABLE Encounter (
+    encounter_id INT AUTO_INCREMENT PRIMARY KEY,
+    chapter_id INT NOT NULL,
+    FOREIGN KEY (chapter_id) REFERENCES Chapter(chapter_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE or replace TABLE NPC (
+    npc_id INT AUTO_INCREMENT PRIMARY KEY,
+    encounter_id INT NOT NULL UNIQUE,
+    npc_name VARCHAR(50) NOT NULL,
+    npc_description TEXT,
+    FOREIGN KEY (encounter_id) REFERENCES Encounter(encounter_id)
+);
+
 CREATE or replace TABLE Monster (
     monster_id INT AUTO_INCREMENT PRIMARY KEY,
+    encounter_id INT NOT NULL UNIQUE,
     monster_name VARCHAR(50) NOT NULL,
     pv INT NOT NULL,
     mana INT,
@@ -81,17 +94,9 @@ CREATE or replace TABLE Monster (
     attack TEXT,
     loot_id INT,
     xp INT NOT NULL,
-    FOREIGN KEY (loot_id) REFERENCES Loot(loot_id)
+    FOREIGN KEY (loot_id) REFERENCES Loot(loot_id),
+    FOREIGN KEY (encounter_id) REFERENCES Encounter(encounter_id)
 );
-CREATE or replace TABLE SHOP (
-    npc_id INT,
-    item_id INT,
-    price INT,
-    PRIMARY KEY (npc_id, item_id),
-    FOREIGN KEY (npc_id) REFERENCES NPC(npc_id),
-    FOREIGN KEY (item_id) REFERENCES Item(item_id)
-);
-
 CREATE or replace TABLE Hero (
     hero_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -116,9 +121,16 @@ CREATE or replace TABLE Hero (
     FOREIGN KEY (class_id) REFERENCES Class(class_id)
 );
 
+CREATE or replace TABLE Inventory (
+    inventory_id INT AUTO_INCREMENT PRIMARY KEY,
+    hero_id INT NOT NULL,
+    item_id INT NOT NULL,
+    FOREIGN KEY (hero_id) REFERENCES Hero(hero_id),
+    FOREIGN KEY (item_id) REFERENCES Item(item_id)
+);
 CREATE or replace TABLE Level (
     level_id INT AUTO_INCREMENT PRIMARY KEY,
-    class_id INT,
+    class_id INT NOT NULL,
     level INT NOT NULL,
     required_xp INT NOT NULL,
     pv_bonus INT NOT NULL,
@@ -127,26 +139,20 @@ CREATE or replace TABLE Level (
     initiative_bonus INT NOT NULL,
     FOREIGN KEY (class_id) REFERENCES Class(class_id)
 );
-CREATE or replace TABLE Encounter (
-    encounter_id INT AUTO_INCREMENT PRIMARY KEY,
-    chapter_id INT NOT NULL,
-    entity_id INT NOT NULL,
-    entity_type ENUM('monster', 'npc') NOT NULL,
-    FOREIGN KEY (chapter_id) REFERENCES Chapter(chapter_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
 
-CREATE or replace TABLE Inventory (
-    inventory_id INT AUTO_INCREMENT PRIMARY KEY,
-    hero_id INT,
-    item_id INT,
-    FOREIGN KEY (hero_id) REFERENCES Hero(hero_id),
+CREATE or replace TABLE SHOP (
+    npc_id INT NOT NULL,
+    item_id INT NOT NULL,
+    price INT,
+    PRIMARY KEY (npc_id, item_id),
+    FOREIGN KEY (npc_id) REFERENCES NPC(npc_id),
     FOREIGN KEY (item_id) REFERENCES Item(item_id)
 );
 
 CREATE or replace TABLE Link (
     link_id INT AUTO_INCREMENT PRIMARY KEY,
-    chapter_id INT,
-    next_chapter_id INT,
+    chapter_id INT NOT NULL,
+    next_chapter_id INT NOT NULL,
     link_description TEXT,
     FOREIGN KEY (chapter_id) REFERENCES Chapter(chapter_id),
     FOREIGN KEY (next_chapter_id) REFERENCES Chapter(chapter_id)
@@ -154,8 +160,8 @@ CREATE or replace TABLE Link (
 
 CREATE or replace TABLE Chapter_Treasure (
     ch_treasure_id INT AUTO_INCREMENT PRIMARY KEY,
-    chapter_id INT,
-    treasure_id INT,
+    chapter_id INT NOT NULL,
+    treasure_id INT NOT NULL,
     FOREIGN KEY (chapter_id) REFERENCES Chapter(chapter_id),
     FOREIGN KEY (treasure_id) REFERENCES Treasure(treasure_id)
 );
