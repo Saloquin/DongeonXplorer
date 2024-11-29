@@ -15,8 +15,7 @@ class Inventaire
     public function checkItem($item_id)
     {
         $item_type_query = "SELECT item_type FROM item WHERE item_id = " . $item_id;
-        $item_type_tab = array();
-        lireBase(connexionDb(), $item_type_query, $item_type_tab);
+        $item_type_tab=lireBase(connexionDb(), $item_type_query );
 
         $item_type = $item_type_tab[0]['item_type'];
 
@@ -42,14 +41,14 @@ class Inventaire
 
     private function loadItems()
     {
-        $tab = array();
-        $query = "SELECT item_id, quantite FROM inventaire WHERE hero_id = " . $this->hero_id;
-        lireBase(connexionDb(), $query, $tab);
+        
+        $query = "SELECT item_id, quantity FROM inventaire WHERE hero_id = " . $this->hero_id;
+        $tab = lireBase(connexionDb(), $query);
 
         // Charger les items en fonction de leur type et leur quantité
         foreach ($tab as $row) {
             $item_id = $row['item_id'];
-            $quantity = $row['quantite'];
+            $quantity = $row['quantity'];
 
             // Vérifier le type de l'item
             $item = $this->checkItem($item_id);
@@ -77,15 +76,19 @@ class Inventaire
 
     // Ajouter un item à l'inventaire
     public function addItem($item_id)
-    {
+    {   
+
+        if(lireBase(connexionDb(), "select charge_max from hero join class using (class_id) where hero_id = " . $this->hero_id)[0]['charge_max'] = this.getTotalItems()+1){
+            return;
+        }
         // Vérifier si l'item est déjà dans l'inventaire
         foreach ($this->items as &$item_entry) {
             if ($item_entry['item']->getItemId() == $item_id) {
                 // L'item est déjà dans l'inventaire, on incrémente sa quantité
                 $item_entry['quantity']++;
                 // Mettre à jour dans la base de données
-                $query = "UPDATE inventaire SET quantite = quantite + 1 WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
-                lireBase(connexionDb(), $query);
+                $query = "UPDATE inventaire SET quantity = quantity + 1 WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
+                modifieBase(connexionDb(), $query);
                 return;
             }
         }
@@ -95,8 +98,8 @@ class Inventaire
         $this->items[] = ['item' => $new_item, 'quantity' => 1];
 
         // Insérer dans la base de données
-        $query = "INSERT INTO inventaire (hero_id, item_id, quantite) VALUES (" . $this->hero_id . ", " . $item_id . ", 1)";
-        lireBase(connexionDb(), $query);
+        $query = "INSERT INTO inventaire (hero_id, item_id, quantity) VALUES (" . $this->hero_id . ", " . $item_id . ", 1)";
+        modifieBase(connexionDb(), $query);
     }
 
     // Supprimer un item de l'inventaire
@@ -109,17 +112,23 @@ class Inventaire
                     // Si l'item a plusieurs exemplaires, réduire la quantité
                     $item_entry['quantity']--;
                     // Mettre à jour dans la base de données
-                    $query = "UPDATE inventaire SET quantite = quantite - 1 WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
-                    lireBase(connexionDb(), $query);
+                    $query = "UPDATE inventaire SET quantity = quantity - 1 WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
+                    modifieBase(connexionDb(), $query);
                 } else {
                     // Si l'item n'a qu'un exemplaire, on le retire
                     unset($item_entry);
                     // Supprimer de la base de données
                     $query = "DELETE FROM inventaire WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
-                    lireBase(connexionDb(), $query);
+                    modifieBase(connexionDb(), $query);
                 }
                 break;
             }
         }
+    }
+    function getTotalItems(){
+        foreach ($this->items as $item_entry) {
+            $total += $item_entry['quantity'];
+        }
+        return $total;
     }
 }

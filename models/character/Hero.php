@@ -24,9 +24,8 @@ abstract class Hero
     public function __construct($id_joueur)
     {   
         $this->id_joueur=$id_joueur;
-        $tab= array();
         $query = "SELECT name, class_id, image, biography, pv, mana, strength, initiative, armor, primary_weapon, secondary_weapon, shield, spell_list, xp, current_level FROM hero WHERE user_id=" . $id_joueur;
-        lireBase(connexionDb(), $query, $tab);
+        $tab= lireBase(connexionDb(), $query);
         
         $this->name = $tab[0]['name'];
         $this->class = $tab[0]['class_id'];
@@ -48,8 +47,7 @@ abstract class Hero
 
     public function addExp($nb_xp){
         $this->xp+=$nb_xp;
-        $tab= array();
-        lireBase(connexionDb(), "SELECT  required_xp FROM hero join class using(class_id) join level using(class_id)  WHERE id_user=" . $this->id_joueur." and level = ".$this->current_level, $tab);
+        $tab=lireBase(connexionDb(), "SELECT  required_xp FROM hero join class using(class_id) join level using(class_id)  WHERE id_user=" . $this->id_joueur." and level = ".$this->current_level);
       
         if($nb_xp>$tab[0]['required_xp']){
             $this->xp -= $tab[0]['required_xp'];

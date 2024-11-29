@@ -5,6 +5,7 @@
 abstract class Classe
 {
     protected $name;
+    protected $image;
     protected $description;
     protected $base_health;
     protected $base_mana;
@@ -12,7 +13,7 @@ abstract class Classe
     protected $initiative; //vitesse
     protected $max_item;
 
-    public function __construct($name, $description, $health, $mana, $strenght,$initiative, $max_item)
+    public function __construct($name, $description, $health, $mana, $strenght,$initiative, $max_item,$image)
     {
         $this->name = $name;
         $this->description = $description;
@@ -21,6 +22,7 @@ abstract class Classe
         $this->strength = $strenght;
         $this->initiative=$initiative;
         $this->max_item = $max_item;
+        $this->image = $image;
     }
 
     abstract public function attack();
@@ -58,6 +60,10 @@ abstract class Classe
     public function getMaxItem()
     {
         return $this->max_item;
+    }
+    public function getImage()
+    {
+        return $this->image;
     }
 
     public function levelUp($levelBonus)

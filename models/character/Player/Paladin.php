@@ -1,12 +1,12 @@
 <?php
 
-require_once("/DongeonXplorer/bdd/Database.php");
+
 class Paladin extends Classe {
     public function __construct() {
-        $tab= array();
-        $query = "SELECT name, class_description as description, health, mana, pv, mana, strength, initiative, max_item FROM class WHERE lower(name)='paladin'";
-        lireBase(connexionDb(), $query, $tab);
-        parent::__construct($tab[0]['name'], $tab[0]['description'], $tab[0]['base_health'], $tab[0]['base_mana'], $tab[0]['strength'], $tab[0]['initiative'], $tab[0]['max_item']);
+        
+        $query = "SELECT class_name, class_description , base_mana, base_pv, strength, initiative, max_items FROM class WHERE lower(class_name)='paladin'";
+        $tab= lireBase(connexionDb(), $query);
+        parent::__construct($tab[0]['class_name'], $tab[0]['class_description'], $tab[0]['base_pv'], $tab[0]['base_mana'], $tab[0]['strength'], $tab[0]['initiative'], $tab[0]['max_items'],'/DongeonXplorer/Images/classe/paladin.jpg');
     }
 
     public function attack() {
