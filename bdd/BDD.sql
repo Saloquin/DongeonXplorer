@@ -9,7 +9,7 @@ CREATE or replace TABLE Class (
     max_items INT NOT NULL
 );
 
-CREATE or replace TABLE User (
+CREATE or replace TABLE Users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -26,7 +26,8 @@ CREATE or replace TABLE Item (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
     object_id INT NOT NULL,
     item_name VARCHAR(50) NOT NULL,
-    item_description TEXT
+    item_description TEXT,
+    item_type ENUM('weapon', 'armor', 'consumable') NOT NULL
 );
 CREATE or replace TABLE armor (
     armor_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,7 +65,6 @@ CREATE or replace TABLE Treasure (
 
 CREATE or replace TABLE Loot (
     loot_id INT AUTO_INCREMENT PRIMARY KEY,
-    loot_name VARCHAR(50) NOT NULL,
     item_id INT,
     quantity INT NOT NULL,
     FOREIGN KEY (item_id) REFERENCES Item(item_id)
@@ -73,6 +73,7 @@ CREATE or replace TABLE Loot (
 CREATE or replace TABLE Encounter (
     encounter_id INT AUTO_INCREMENT PRIMARY KEY,
     chapter_id INT NOT NULL,
+    entity_type ENUM('monster', 'npc') NOT NULL,
     FOREIGN KEY (chapter_id) REFERENCES Chapter(chapter_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE or replace TABLE NPC (
@@ -97,6 +98,8 @@ CREATE or replace TABLE Monster (
     FOREIGN KEY (loot_id) REFERENCES Loot(loot_id),
     FOREIGN KEY (encounter_id) REFERENCES Encounter(encounter_id)
 );
+
+
 CREATE or replace TABLE Hero (
     hero_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -123,6 +126,7 @@ CREATE or replace TABLE Hero (
 
 CREATE or replace TABLE Inventory (
     inventory_id INT AUTO_INCREMENT PRIMARY KEY,
+    quantity int,
     hero_id INT NOT NULL,
     item_id INT NOT NULL,
     FOREIGN KEY (hero_id) REFERENCES Hero(hero_id),

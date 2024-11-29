@@ -1,11 +1,12 @@
 <?php
+session_start();
 DEFINE('DIR_ROOT', dirname(__FILE__));
 DEFINE('URL_ROOT', 'http://127.0.0.1/DongeonXplorer');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+require_once 'models/User.php';
 require 'autoload.php';
 
 
@@ -89,11 +90,14 @@ $router = new Router('DongeonXplorer');
 // Ajout des routes
 $router->addRouteGet('profil', 'ProfilController@index');
 $router->addRouteGet('player_selection', 'Player_selectionController@index');
+
 $router->addRouteGet('home', 'HomeController@index');
 $router->addRouteGet('', 'HomeController@index');
+
 $router->addRouteGet('chapter/{id}', 'ChapterController@show');
 $router->addRouteGet('login', 'LoginController@index'); 
-$router->addRoutePost('login', 'LoginController@login'); 
+$router->addRoutePost('login', 'LoginController@login');
+$router->addRouteGet('logout', 'LoginController@logout');  
 //register
 $router->addRouteGet('register', 'RegisterController@index'); 
 $router->addRoutePost('register', 'RegisterController@register'); 

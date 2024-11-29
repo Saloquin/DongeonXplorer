@@ -28,8 +28,6 @@ function connexionDb(){
         $db = new PDO("mysql:host=$dbHost;dbname=$dbName;charset=utf8", $dbUser, $dbPassword);
         // Définition des attributs de PDO pour afficher les erreurs
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-        echo "BDD Chargé";
         return $db;
     } catch (PDOException $e) {
         echo "Erreur de connexion à la base de données : " . $e->getMessage();   
