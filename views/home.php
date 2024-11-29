@@ -3,6 +3,11 @@
 <body class="bg-primary text-textMain font-body min-h-screen">
     <?php include_once('views/template/navbar.php') ?>
 
+    <!-- Logo Under Navbar -->
+    <div class="flex justify-center mt-8">
+        <img src="/DongeonXplorer/Images/icon/Logo.ico" alt="DungeonXplorer Logo" class="h-64" />
+    </div>
+
     <!-- Main Content -->
     <main class="bg-secondary p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto mt-8">
         <h1 class="text-4xl font-title text-accentGold mb-4 text-center">Bienvenue sur DungeonXplorer</h1>
