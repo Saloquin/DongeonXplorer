@@ -1,6 +1,6 @@
 <?php include_once('views/template/head.php') ?>
 
-<body class="bg-primary text-textMain font-body min-h-screen">
+<body class="bg-background-home bg-larger text-textMain font-body min-h-screen background-home bg-fixed">
     <?php include_once('views/template/navbar.php') ?>
 
     <!-- Logo Under Navbar -->

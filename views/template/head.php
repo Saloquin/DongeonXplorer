@@ -24,6 +24,12 @@
                         title: ['"Pirata One"', 'cursive'],
                         body: ['Roboto', 'sans-serif'],
                     },
+                    backgroundImage: {
+                        'background-home': "url('/DongeonXplorer/Images/icon/fond.jpg')",
+                    },
+                    backgroundSize: {
+                        'larger': '100%',  
+                    },
                 },
             },
         };
