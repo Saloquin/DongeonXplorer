@@ -2,31 +2,53 @@
 
 
 
-abstract class Classe
+class Classe
 {
-    protected $name;
-    protected $image;
-    protected $description;
-    protected $base_health;
-    protected $base_mana;
-    protected $strength;
-    protected $initiative; //vitesse
-    protected $max_item;
+    private $id;
+    private $name;
+    private $image;
+    private $description;
+    private $base_health;
+    private $base_mana;
+    private $strength;
+    private $initiative; //vitesse
+    private $max_item;
 
-    public function __construct($name, $description, $health, $mana, $strenght,$initiative, $max_item,$image)
+    private $spell_list = [];
+
+    public function __construct($class_id)
     {
-        $this->name = $name;
-        $this->description = $description;
-        $this->base_health = $health;
-        $this->base_mana = $mana;
-        $this->strength = $strenght;
-        $this->initiative=$initiative;
-        $this->max_item = $max_item;
-        $this->image = $image;
+        $query = "SELECT * FROM class WHERE class_id = ".$class_id;
+        $tab = lireBase(connexionDb(), $query);
+
+        
+            $this->id = $tab[0]['class_id'];
+            $this->name = $tab[0]['class_name'];
+            $this->description = $tab[0]['class_description'];
+            $this->base_health = $tab[0]['base_pv'];
+            $this->base_mana = $tab[0]['base_mana'];
+            $this->strength = $tab[0]['strength'];
+            $this->initiative = $tab[0]['initiative'];
+            $this->max_item = $tab[0]['max_items'];
+            $this->image = $tab[0]['class_image'];
+
+        $spellQuery = "SELECT spell_id FROM spell WHERE class_id = ".$this->getId(); ;
+        $spells = lireBase(connexionDb(), $spellQuery);
+
+        foreach ($spells as $spell) {
+            $spellObject = new Spell($spell['spell_id']); 
+            $this->spell_list[] = $spellObject; 
+        }
+
+    }
+    public function attack($hero) {
+        return rollDice(1) + $hero->getStrength();
     }
 
-    abstract public function attack();
-
+    public function getId()
+    {
+        return $this->id;
+    }
     public function getName()
     {
         return $this->name;

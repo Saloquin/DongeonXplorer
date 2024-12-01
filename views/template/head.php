@@ -25,7 +25,7 @@
                         body: ['Roboto', 'sans-serif'],
                     },
                     backgroundImage: {
-                        'background-home': "url('/DongeonXplorer/Images/icon/fond.jpg')",
+                        'background-home': "url('/DongeonXplorer/Images/background/home.jpg')",
                     },
                     backgroundSize: {
                         'larger': '100%',  

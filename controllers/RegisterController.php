@@ -13,16 +13,15 @@ class RegisterController {
         $db = connexionDb();
         $tab = lireBase($db, $sql_verif);
         if($tab[0]['nb'] > 0){
-            $error = "Ce Pseudo est déja utilisé !";
             header('Location:  register');
-            $_SESSION['error']=$error;
+            $_SESSION['error']="Ce Pseudo est déja utilisé !";
             return ;
         }
         else {
             $sql="insert into users(username,password) values ('".$username."', '".password_hash($password, PASSWORD_DEFAULT)."')";
             echo $sql;
             modifieBase($db,$sql);
-            $_SESSION['user'] = $username;
+            $_SESSION['user'] = lireBase(connexionDb(), "select user_id from users where username = '".$username."'")[0]["user_id"];
             header('Location:  profil');
         }
         exit();

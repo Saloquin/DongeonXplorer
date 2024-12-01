@@ -9,29 +9,34 @@ class ChapterController
 
     public function __construct()
     {
-        $tab=array();
-        lireBase(connexionDb(), 'SELECT chapter_id FROM chapter', $tab);
+        
+        $tab=lireBase(connexionDb(), 'SELECT chapter_id FROM chapter');
         foreach ($tab as $row) {
             $chapter = new Chapter($row['chapter_id']);
             $this->chapters[] = $chapter;
         }
     }
 
-    public function show($id)
+    public function show()
     {
-        $chapter = $this->getChapter($id);
-
+        $user = new User($_SESSION['user']);
+        if(isset($_POST['chapter_id']))
+        {   
+            modifieBase(connexionDb(),'update hero set chapter_id='.$_POST['chapter_id'].' where user_id='.$user->getId());
+            $chapter= $this->getChapter($user->getHero()->getChapter());
+        }
+        else
+            $chapter = $this->getChapter($user->getHero()->getChapter());
         if ($chapter) {
-            include 'views/chapter_view.php'; // Charge la vue pour le chapitre
+            include 'views/chapter_view.php'; 
         } else {
-            // Si le chapitre n'existe pas, redirige vers un chapitre par défaut ou affiche une erreur
-            header('HTTP/1.0 404 Not Found');
             echo "Chapitre non trouvé!";
         }
     }
 
     public function getChapter($id)
-    {
+    {   
+        
         foreach ($this->chapters as $chapter) {
             if ($chapter->getId() == $id) {
                 return $chapter;

@@ -1,7 +1,7 @@
 <?php
 
 // models/Chapter.php
-require_once '/DungeonXplorer/bdd/Database.php';
+require_once 'bdd/Database.php';
 class Chapter
 {
     private $id;
@@ -12,9 +12,9 @@ class Chapter
 
     public function __construct($id)
     {
-        $tab = lireBase(connexionDb(), 'SELECT chapter_id,content,image FROM chapter where chapter_id=' . $id);
+        $tab = lireBase(connexionDb(), 'SELECT chapter_id,chapter_title,content,image FROM chapter where chapter_id=' . $id);
         $this->id = $tab[0]['chapter_id'];
-        //$this->title = $title;
+        $this->title = $tab[0]['chapter_title'];
         $this->description = $tab[0]['content'];
         $this->image = $tab[0]['image'];
 
@@ -52,4 +52,5 @@ class Chapter
     {
         return $this->choices;
     }
+
 }
