@@ -1,6 +1,6 @@
 <?php
 // controllers/ChapterController.php
-
+require_once 'bdd/Database.php';
 require_once 'models/Chapter.php';
 
 class ChapterController
@@ -9,31 +9,12 @@ class ChapterController
 
     public function __construct()
     {
-        // Exemple de chapitres avec des images
-        $this->chapters[] = new Chapter(
-            1,
-            "La Forêt Enchantée",
-            "Vous vous trouvez dans une forêt sombre et enchantée. Deux chemins se présentent à vous.",
-            "images/forêt.jpg", // Chemin vers l'image
-            [
-                ["text" => "Aller à gauche", "chapter" => 2],
-                ["text" => "Aller à droite", "chapter" => 3]
-            ]
-        );
-
-        $this->chapters[] = new Chapter(
-            2,
-            "Le Lac Mystérieux",
-            "Vous arrivez à un lac aux eaux limpides. Une créature vous observe.",
-            "images/lac.jpg", // Chemin vers l'image
-            [
-                ["text" => "Nager dans le lac", "chapter" => 4],
-                ["text" => "Faire demi-tour", "chapter" => 1]
-            ]
-        );
-
-        
-
+        $tab=array();
+        lireBase(connexionDb(), 'SELECT chapter_id FROM chapter', $tab);
+        foreach ($tab as $row) {
+            $chapter = new Chapter($row['chapter_id']);
+            $this->chapters[] = $chapter;
+        }
     }
 
     public function show($id)

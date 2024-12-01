@@ -1,0 +1,4 @@
+DB_HOST=localhost
+DB_NAME=nom_base
+DB_USER=id
+DB_PASSWORD=mdp

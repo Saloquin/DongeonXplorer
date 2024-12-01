@@ -8,11 +8,16 @@ class LoginController {
     }
 
     public function logout() {
-        // Logic for logging out the user
-        session_start();
+        if(isset($_SESSION['user'])){
         session_destroy();
-        header('Location: ' . URL_ROOT);
+        session_start();
+        header('Location:  home');
         exit();
+    }else{
+        header('Location:  profil');
+        exit();
+    }
+        
     }
 
     public function login() {
@@ -21,14 +26,13 @@ class LoginController {
 
             // Logic to authenticate user
             if ($this->authenticate($username, $password)) {
-                session_start();
                 $_SESSION['user'] = $username;
-                header('Location: ' . URL_ROOT);
+                header('Location:  profil');
                 exit();
             } else {
                 // Handle login failure
-                $error = "Invalid username or password";
-                require_once 'views/login.php';
+                $error = "Peusdo ou mot de passe incorrect";
+                header('Location:  login');
             }
             
     }
@@ -36,7 +40,7 @@ class LoginController {
     private function authenticate($username, $password) {
         $pseudo = htmlspecialchars($username);
         $password = htmlspecialchars($password);
-        $sql_verif="select * from User where username = '". $username."'";
+        $sql_verif="select * from users where username = '". $username."'";
         $db = connexionDb();
         $tab = lireBase($db, $sql_verif);
         var_dump($tab);
@@ -47,7 +51,6 @@ class LoginController {
         else{
             return false;
         }
-        
 
     }
 

@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php include_once('views/template/head.php')?>
+<body class="bg-primary text-textMain font-body min-h-screen bg-[url('Images/background/404.jpg')] bg-cover">
+    <?php include_once('views/template/navbar.php')?>
+    <div class="flex flex-col items-center justify-center min-h-screen ">
+        <h1 class="bg-primary p-5"> Erreur 404 : page non trouvé </h1>
+        <h2 class="bg-primary p-5">Je crois que tu t'es trompé de chemin.</h2>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/DongeonXplorer/Images/icon/Logo.ico" type="image/x-icon">
-    <script defer src="https://cdn.tailwindcss.com"></script>
-    <title>Accueil</title>
-</head>
-
-<body>
-    <h1> Je crois que tu t'es trompé de chemin</h1>
 </body>
 
 </html>
