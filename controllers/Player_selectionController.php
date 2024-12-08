@@ -7,10 +7,9 @@ class Player_selectionController {
         $user =new User($_SESSION['user']);
         $name = $_POST['heroName'];
         $id_class = $_POST['classId'];
-        echo $id_class;
         $tab= lireBase(connexionDb(),'select base_pv,base_mana,strength,initiative from class where class_id = '.$id_class);
-        $sql = "INSERT INTO hero (user_id,chapter_id,hero_name,class_id,pv,mana,strength,initiative,armor,primary_weapon,secondary_weapon,xp,money,current_level) 
-                    VALUES ('".$user->getId()."',1,'".$name."', '".$id_class."',".$tab[0]['base_pv'].",".$tab[0]['base_mana'].",".$tab[0]['strength'].",".$tab[0]['initiative'].",0,0,0,0,0,1)";
+        $sql = "INSERT INTO hero (user_id,chapter_id,hero_name,class_id,pv,mana,strength,initiative,armor,primary_weapon,secondary_weapon,xp,money,current_level,mana_max,pv_max) 
+                    VALUES ('".$user->getId()."',1,'".$name."', '".$id_class."',".$tab[0]['base_pv'].",".$tab[0]['base_mana'].",".$tab[0]['strength'].",".$tab[0]['initiative'].",0,0,0,0,0,1,".$tab[0]['base_mana'].",".$tab[0]['base_pv'].")";
         $db = connexionDb();
         if(lireBase($db,'select count(*) as nb from hero where user_id = '.$user->getId())[0]['nb'] > 0){
             header('Location:  profil');

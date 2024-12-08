@@ -1,6 +1,6 @@
 <?php
 
-
+require_once("models/character/Player/Spell.php");
 
 class Classe
 {
@@ -41,9 +41,7 @@ class Classe
         }
 
     }
-    public function attack($hero) {
-        return rollDice(1) + $hero->getStrength();
-    }
+    
 
     public function getId()
     {

@@ -7,7 +7,7 @@ DEFINE('URL_ROOT', 'http://127.0.0.1/DongeonXplorer');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require_once 'models/User.php';
+
 
 
 
@@ -164,6 +164,7 @@ $router = new Router('DongeonXplorer');
 // Ajout des routes
 $router->addRouteGet('profil', 'ProfilController@index', ['checkAuth']);
 $router->addRoutePost('profil', 'ProfilController@changePP', ['checkAuth']);
+
 $router->addRouteGet('delete_hero', 'ProfilController@deleteHero', ['checkAuth']);
 
 $router->addRouteGet('player_selection', 'Player_selectionController@index',['checkAuth','checkNoHero']);
@@ -183,6 +184,10 @@ $router->addRouteGet('logout', 'LoginController@logout', ['checkAuth']);
 $router->addRouteGet('register', 'RegisterController@index', ['checkNoAuth']); 
 $router->addRoutePost('register', 'RegisterController@register', ['checkNoAuth']); 
 
+$router->addRoutePost('attack', 'CombatController@attack', ['checkAuth','checkHero']); 
+$router->addRoutePost('cast_spell', 'CombatController@castSpell', ['checkAuth','checkHero']); 
+$router->addRouteGet('attack', 'ChapterController@show', ['checkAuth','checkHero']); 
+$router->addRouteGet('cast_spell', 'ChapterController@show', ['checkAuth','checkHero']); 
 
 
 // Appel de la méthode route

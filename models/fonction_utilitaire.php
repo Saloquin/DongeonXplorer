@@ -1,5 +1,15 @@
 <?php
+
 function rollDice($numberOfDice)
+{
+    $sum = 0;
+    for ($i = 0; $i < $numberOfDice; $i++) {
+        $result = rand(1, 6);
+        $sum += $result; 
+    }
+    return $result;
+}
+/*function rollDice($numberOfDice)
 {
     $results = [];
     $sum = 0;
@@ -64,4 +74,4 @@ function rollDice($numberOfDice)
         }, 1000 * ($numberOfDice + 1)); // Attendre 1 seconde après le dernier résultat
     </script>
     HTML;
-}
+}*/

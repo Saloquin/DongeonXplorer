@@ -1,4 +1,5 @@
 <?php
+include_once "models/fonction_utilitaire.php";
 class Spell {
     private $id;
     private $name;
@@ -46,8 +47,10 @@ class Spell {
 
     
     public function cast($hero) {
-        $hero->setMana($hero->getMana() - $this->manaCost); 
-        return rollDice($this->diceCount) + $hero->getStrength(); 
+        $hero->setMana($hero->getMana() - $this->manaCost);
+        modifieBase(connexionDb(), "UPDATE hero SET mana = ".$hero->getMana()." WHERE hero_id = ".$hero->getHeroId());
+        $damage = rollDice($this->diceCount) + $hero->getStrength();
+        return $damage; 
     }
 }
 

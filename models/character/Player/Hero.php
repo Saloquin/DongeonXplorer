@@ -14,6 +14,9 @@ class Hero
     private $class;
     private $image;
     private $pv;
+
+    private $pv_max;
+    private $mana_max;
     private $mana;
     private $strength;
     private $initiative; //vitesse
@@ -31,7 +34,7 @@ class Hero
     public function __construct($id_joueur)
     {   
         $this->id_joueur = $id_joueur;
-        $query = "SELECT hero_id,chapter_id, hero_name, class_id, image, pv, mana, strength, initiative, armor, primary_weapon, secondary_weapon, xp, current_level,money FROM hero WHERE user_id=" . $id_joueur;
+        $query = "SELECT hero_id,chapter_id, hero_name, class_id, image, pv,pv_max,mana_max, mana, strength, initiative, armor, primary_weapon, secondary_weapon, xp, current_level,money FROM hero WHERE user_id=" . $id_joueur;
         $tab = lireBase(connexionDb(), $query);
         
         $this->chapter = $tab[0]["chapter_id"];
@@ -41,6 +44,8 @@ class Hero
         $this->image = $tab[0]['image'];
         $this->pv = $tab[0]['pv'];
         $this->mana = $tab[0]['mana'];
+        $this->pv_max = $tab[0]['pv_max'];
+        $this->mana_max = $tab[0]['mana_max'];
         $this->strength = $tab[0]['strength'];
         $this->initiative = $tab[0]['initiative'];
         $this->armor = $tab[0]['armor'];
@@ -66,9 +71,9 @@ class Hero
 
     public function addExp($nb_xp){
         $this->xp+=$nb_xp;
-        $tab=lireBase(connexionDb(), "SELECT  required_xp FROM hero join class using(class_id) join level using(class_id)  WHERE id_user=" . $this->id_joueur." and level = ".$this->current_level);
+        $tab=lireBase(connexionDb(), "SELECT  required_xp FROM hero join class using(class_id) join level using(class_id)  WHERE user_id=" . $this->id_joueur." and level = ".$this->current_level);
       
-        if($nb_xp>$this->getXpRequired()){
+        if($nb_xp>=$this->getXpRequired()){
             $this->xp -= $this->getXpRequired();
             $this->addLevel();
         }
@@ -77,16 +82,45 @@ class Hero
 
     public function addLevel(){
         $this->current_level+=1;
-        modifieBase(connexionDb(),"update hero set current_level=". $this->current_level);
+        modifieBase(connexionDb(),"update hero set current_level=current_level+1");
         $tab = lireBase(connexionDb(), "SELECT strength_bonus,initiative_bonus,mana_bonus,pv_bonus FROM level join class using(class_id) WHERE level = ".$this->current_level." and class_id = ".$this->class->getId());
         $this->pv+=$tab[0]['pv_bonus'];
         $this->mana+=$tab[0]['mana_bonus'];
+        $this->pv_max+=$tab[0]['pv_bonus'];
+        $this->mana_max+=$tab[0]['mana_bonus'];
         $this->strength+=$tab[0]['strength_bonus'];
         $this->initiative+=$tab[0]['initiative_bonus'];
         modifieBase(connexionDb(),"update hero set pv=". $this->pv);
         modifieBase(connexionDb(),"update hero set mana=". $this->mana);
+        modifieBase(connexionDb(),"update hero set pv_max=". $this->pv_max);
+        modifieBase(connexionDb(),"update hero set mana_max=". $this->mana_max);
         modifieBase(connexionDb(),"update hero set strength=". $this->strength);
         modifieBase(connexionDb(),"update hero set initiative=". $this->initiative);
+        unset($this->spell_list);
+        $query = "SELECT spell_id FROM spell WHERE class_id = " . $this->class->getId();
+        $tab = lireBase(connexionDb(), $query);
+        foreach ($tab as $spell) {
+            $spell = new Spell($spell['spell_id']);
+            if ($spell->getLearningLevel() <= $this->current_level) {
+                $this->spell_list[] = $spell;
+            }
+        }
+    }
+
+    public function attack(Monster $monster) {
+        $damage = rollDice(1) + $this->strength; 
+        $monster->takeDamage($damage);
+        
+        return $damage; 
+    }
+    public function castSpell(Monster $monster, Spell $spell) {
+        $damage = $spell->cast($this); // Utilise la méthode cast de la classe Spell
+        $monster->takeDamage($damage);
+        return $damage; // Retourne les dégâts infligés par le sort
+    }
+    
+    public function isAlive() {
+        return $this->pv > 0;
     }
     public function getHeroId() {
         return $this->id_hero;
@@ -159,6 +193,10 @@ class Hero
         return $this->chapter;
     }   
 
+    public function setChapter($chapter) {
+        $this->chapter = $chapter;
+    }    
+
     public function getMoney() {
         return $this->money;
     }
@@ -167,8 +205,28 @@ class Hero
         return $this->inventory;
     }   
     
+    public function setMoney($money) {
+        $this->money = $money;
+    }
     
+    public function setMana($mana){
+        $this->mana = $mana;
+    }
+
+    public function setPv($pv){
+        $this->pv = $pv;
+    }
     
-    
+    public function takeDamage($damage) {
+        $this->pv -= $damage;
+        if($this->pv < 0) $this->pv = 0;
+    }
+    public function getPvMax() {
+        return $this->pv_max;
+    }
+
+    public function getManaMax(){
+        return $this->mana_max;
+    }
     
 }

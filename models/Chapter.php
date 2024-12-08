@@ -18,12 +18,13 @@ class Chapter
         $this->description = $tab[0]['content'];
         $this->image = $tab[0]['image'];
 
-        $tab = lireBase(connexionDb(), 'SELECT chapter_id,next_chapter_id,link_description FROM link where chapter_id=' . $id);
+        $tab = lireBase(connexionDb(), 'SELECT chapter_id,next_chapter_id,link_description,victory FROM link where chapter_id=' . $id);
 
         foreach ($tab as $row) {
             $this->choices[] = [
                 'chapter_id' => $row['next_chapter_id'],
-                'link_description' => $row['link_description']
+                'link_description' => $row['link_description'],
+                'victory' => $row['victory']
             ];
         }
     }

@@ -53,9 +53,9 @@
                         <div class="flex-1">
                             <p class="text-textSecondary mb-4">Stats du Hero :</p>
                             <p><span class="font-semibold text-accentGold">Vie :</span>
-                                <?php echo $user->getHero()->getPv() ?></p>
+                                <?php echo $user->getHero()->getPv()."/".$user->getHero()->getPvMax() ?></p>
                             <p><span class="font-semibold text-accentGold">Mana :</span>
-                                <?php echo $user->getHero()->getMana() ?></p>
+                                <?php echo $user->getHero()->getMana()."/".$user->getHero()->getManaMax() ?></p>
                             <p><span class="font-semibold text-accentGold">Force :</span>
                                 <?php echo $user->getHero()->getStrength() ?></p>
                             <p><span class="font-semibold text-accentGold">Vitesse :</span>
