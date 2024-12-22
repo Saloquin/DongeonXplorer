@@ -3,9 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : dim. 01 déc. 2024 à 16:53
+-- Généré le : dim. 22 déc. 2024 à 13:30
 -- Version du serveur : 8.3.0
 -- Version de PHP : 8.2.18
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -31,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `armor` (
   `initiative` int DEFAULT NULL,
   PRIMARY KEY (`armor_id`),
   UNIQUE KEY `item_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `armor`
@@ -45,17 +49,42 @@ INSERT INTO `armor` (`armor_id`, `item_id`, `defense`, `initiative`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `attack`
+--
+
+DROP TABLE IF EXISTS `attack`;
+CREATE TABLE IF NOT EXISTS `attack` (
+  `attack_id` int NOT NULL AUTO_INCREMENT,
+  `monster_id` int NOT NULL,
+  `attack_name` text NOT NULL,
+  `dice_count` int NOT NULL,
+  `mana_cost` int NOT NULL,
+  PRIMARY KEY (`attack_id`),
+  KEY `monster_id` (`monster_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Déchargement des données de la table `attack`
+--
+
+INSERT INTO `attack` (`attack_id`, `monster_id`, `attack_name`, `dice_count`, `mana_cost`) VALUES
+(1, 1, 'Charge sauvage', 2, 0),
+(2, 2, 'Morsure ténébreuse', 3, 5);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `chapter`
 --
 
 DROP TABLE IF EXISTS `chapter`;
 CREATE TABLE IF NOT EXISTS `chapter` (
   `chapter_id` int NOT NULL AUTO_INCREMENT,
-  `chapter_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `chapter_title` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `content` text NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`chapter_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `chapter`
@@ -88,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `chapter_treasure` (
   PRIMARY KEY (`ch_treasure_id`),
   KEY `chapter_id` (`chapter_id`),
   KEY `treasure_id` (`treasure_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -108,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `class` (
   `class_image` text NOT NULL,
   `max_items` int NOT NULL,
   PRIMARY KEY (`class_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `class`
@@ -119,6 +148,47 @@ INSERT INTO `class` (`class_id`, `class_name`, `class_description`, `base_pv`, `
 (2, 'Paladin', 'Un combattant sacré, entre le guerrier et le magicien', 120, 100, 18, 12, '/DongeonXplorer/Images/classe/paladin.jpg', 5),
 (3, 'Magicien', 'Un utilisateur de magie avec une faible défense mais une grande puissance magique', 80, 150, 5, 10, '/DongeonXplorer/Images/classe/Magician01.jpg', 3),
 (4, 'Voleur', 'Un expert de l\'esquive et des attaques rapides', 100, 30, 18, 20, '/DongeonXplorer/Images/classe/Thief.jpg', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `combat`
+--
+
+DROP TABLE IF EXISTS `combat`;
+CREATE TABLE IF NOT EXISTS `combat` (
+  `combat_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `hero_id` int DEFAULT NULL,
+  `chapter_id` int NOT NULL,
+  `monster_id` int DEFAULT NULL,
+  `monster_pv` int DEFAULT NULL,
+  `monster_mana` int NOT NULL,
+  `ongoing` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`combat_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Déchargement des données de la table `combat`
+--
+
+INSERT INTO `combat` (`combat_id`, `user_id`, `hero_id`, `chapter_id`, `monster_id`, `monster_pv`, `monster_mana`, `ongoing`) VALUES
+(70, 1, 20, 4, 1, -20, 10, 0),
+(69, 1, 20, 4, 1, 50, 10, 0),
+(68, 1, 20, 4, 1, 50, 10, 0),
+(67, 1, 20, 4, 1, 50, 10, 0),
+(66, 1, 20, 4, 1, 50, 10, 0),
+(65, 1, 20, 4, 1, -24, 10, 0),
+(64, 1, 20, 4, 1, -23, 10, 0),
+(63, 1, 20, 4, 1, 50, 10, 0),
+(62, 1, 20, 4, 1, 50, 10, 0),
+(61, 1, 20, 4, 1, -25, 10, 0),
+(60, 1, 20, 4, 1, -21, 10, 0),
+(59, 1, 20, 4, 1, -18, 10, 0),
+(58, 1, 20, 6, 2, -5, 10, 0),
+(57, 1, 20, 4, 1, -25, 10, 0),
+(56, 1, 20, 4, 1, -20, 10, 0),
+(71, 1, 20, 4, 1, -21, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -134,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `consumable` (
   `mana` int DEFAULT NULL,
   PRIMARY KEY (`consumable_id`),
   UNIQUE KEY `item_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `consumable`
@@ -157,7 +227,15 @@ CREATE TABLE IF NOT EXISTS `encounter` (
   `entity_type` enum('monster','npc') NOT NULL,
   PRIMARY KEY (`encounter_id`),
   KEY `chapter_id` (`chapter_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Déchargement des données de la table `encounter`
+--
+
+INSERT INTO `encounter` (`encounter_id`, `chapter_id`, `entity_type`) VALUES
+(1, 4, 'monster'),
+(2, 6, 'monster');
 
 -- --------------------------------------------------------
 
@@ -174,6 +252,8 @@ CREATE TABLE IF NOT EXISTS `hero` (
   `class_id` int DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `pv` int NOT NULL,
+  `pv_max` int NOT NULL,
+  `mana_max` int NOT NULL,
   `mana` int NOT NULL,
   `strength` int NOT NULL,
   `initiative` int NOT NULL,
@@ -187,14 +267,14 @@ CREATE TABLE IF NOT EXISTS `hero` (
   KEY `user_id` (`user_id`),
   KEY `chapter_id` (`chapter_id`),
   KEY `class_id` (`class_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `hero`
 --
 
-INSERT INTO `hero` (`hero_id`, `user_id`, `chapter_id`, `hero_name`, `class_id`, `image`, `pv`, `mana`, `strength`, `initiative`, `armor`, `primary_weapon`, `secondary_weapon`, `xp`, `money`, `current_level`) VALUES
-(11, 1, 7, 'Jacobe', 4, NULL, 100, 30, 18, 20, 0, 0, 0, 0, 0, 1);
+INSERT INTO `hero` (`hero_id`, `user_id`, `chapter_id`, `hero_name`, `class_id`, `image`, `pv`, `pv_max`, `mana_max`, `mana`, `strength`, `initiative`, `armor`, `primary_weapon`, `secondary_weapon`, `xp`, `money`, `current_level`) VALUES
+(20, 1, 1, 'Mamadou', 1, NULL, 150, 150, 50, 50, 20, 15, 0, 0, 0, 550, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -211,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   PRIMARY KEY (`inventory_id`),
   KEY `hero_id` (`hero_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -222,12 +302,12 @@ CREATE TABLE IF NOT EXISTS `inventory` (
 DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
   `item_id` int NOT NULL AUTO_INCREMENT,
-  `item_image` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `item_image` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `item_name` varchar(50) NOT NULL,
   `item_description` text,
-  `item_type` enum('weapon','armor','consumable','loot') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `item_type` enum('weapon','armor','consumable','loot') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `item`
@@ -243,7 +323,9 @@ INSERT INTO `item` (`item_id`, `item_image`, `item_name`, `item_description`, `i
 (47, 'item07.jpg', 'Potion de Mana', 'Restaure 30 points de mana.', 'consumable'),
 (48, 'item08.jpg', 'Bague du Pouvoir', 'Une bague rare qui augmente la force magique.', 'loot'),
 (49, 'item09.jpg', 'Épée de Glace', 'Une épée enchantée qui inflige des dégâts de glace.', 'weapon'),
-(50, 'item10.jpg', 'Armure Royale', 'Armure lourde et résistante, utilisée par les chevaliers royaux.', 'armor');
+(50, 'item10.jpg', 'Armure Royale', 'Armure lourde et résistante, utilisée par les chevaliers royaux.', 'armor'),
+(51, 'Images/loot/boar_tusk.jpg', 'Défense de sanglier', 'Une défense robuste et tranchante.', 'loot'),
+(52, 'Images/loot/wolf_pelt.jpg', 'Peau de loup noir', 'Une peau dense et précieuse.', 'loot');
 
 -- --------------------------------------------------------
 
@@ -263,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `level` (
   `initiative_bonus` int NOT NULL,
   PRIMARY KEY (`level_id`),
   KEY `class_id` (`class_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `level`
@@ -306,33 +388,34 @@ CREATE TABLE IF NOT EXISTS `link` (
   `chapter_id` int NOT NULL,
   `next_chapter_id` int NOT NULL,
   `link_description` text,
+  `victory` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`link_id`),
   KEY `chapter_id` (`chapter_id`),
   KEY `next_chapter_id` (`next_chapter_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `link`
 --
 
-INSERT INTO `link` (`link_id`, `chapter_id`, `next_chapter_id`, `link_description`) VALUES
-(84, 10, 1, 'vous êtes mort mais une deuxième chance est toujours accordée à ceux qui possèdent de l\'espoir'),
-(83, 9, 1, 'atteindre le château'),
-(82, 8, 9, 'ignorer la pierre et continuer'),
-(80, 7, 9, 'suivre le chemin tortueux'),
-(81, 8, 11, 'toucher la pierre gravée'),
-(79, 7, 8, 'prendre le sentier couvert de mousse'),
-(77, 6, 7, 'survivre au loup'),
-(78, 6, 10, 'être vaincu par le loup'),
-(76, 5, 7, 'écouter le paysan'),
-(75, 4, 10, 'échouer face au sanglier'),
-(74, 4, 8, 'vaincre le sanglier'),
-(73, 3, 6, 'ignorer les bruits et de poursuivre votre route'),
-(72, 3, 5, 'rester prudent'),
-(71, 2, 4, 'empruntez le sentier couvert de ronces'),
-(69, 1, 2, 'se diriger vers la foret'),
-(70, 2, 3, 'empruntez le chemin sinueux'),
-(51, 11, 10, 'La pierre aspire votre vitalité');
+INSERT INTO `link` (`link_id`, `chapter_id`, `next_chapter_id`, `link_description`, `victory`) VALUES
+(84, 10, 1, 'vous êtes mort mais une deuxième chance est toujours accordée à ceux qui possèdent de l\'espoir', 0),
+(83, 9, 1, 'atteindre le château', 0),
+(82, 8, 9, 'ignorer la pierre et continuer', 0),
+(80, 7, 9, 'suivre le chemin tortueux', 0),
+(81, 8, 11, 'toucher la pierre gravée', 0),
+(79, 7, 8, 'prendre le sentier couvert de mousse', 0),
+(77, 6, 7, 'survivre au loup', 1),
+(78, 6, 10, 'être vaincu par le loup', 0),
+(76, 5, 7, 'écouter le paysan', 0),
+(75, 4, 10, 'échouer face au sanglier', 0),
+(74, 4, 8, 'vaincre le sanglier', 1),
+(73, 3, 6, 'ignorer les bruits et de poursuivre votre route', 0),
+(72, 3, 5, 'rester prudent', 0),
+(71, 2, 4, 'empruntez le sentier couvert de ronces', 0),
+(69, 1, 2, 'se diriger vers la foret', 0),
+(70, 2, 3, 'empruntez le chemin sinueux', 0),
+(51, 11, 10, 'La pierre aspire votre vitalité', 0);
 
 -- --------------------------------------------------------
 
@@ -347,7 +430,7 @@ CREATE TABLE IF NOT EXISTS `loot` (
   `quantity` int NOT NULL,
   PRIMARY KEY (`loot_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `loot`
@@ -355,7 +438,9 @@ CREATE TABLE IF NOT EXISTS `loot` (
 
 INSERT INTO `loot` (`loot_id`, `item_id`, `quantity`) VALUES
 (3, 44, 1),
-(4, 48, 3);
+(4, 48, 3),
+(1, NULL, 0),
+(2, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -372,13 +457,21 @@ CREATE TABLE IF NOT EXISTS `monster` (
   `mana` int DEFAULT NULL,
   `initiative` int NOT NULL,
   `strength` int NOT NULL,
-  `attack` text,
+  `image` text NOT NULL,
   `loot_id` int DEFAULT NULL,
   `xp` int NOT NULL,
   PRIMARY KEY (`monster_id`),
   UNIQUE KEY `encounter_id` (`encounter_id`),
   KEY `loot_id` (`loot_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Déchargement des données de la table `monster`
+--
+
+INSERT INTO `monster` (`monster_id`, `encounter_id`, `monster_name`, `pv`, `mana`, `initiative`, `strength`, `image`, `loot_id`, `xp`) VALUES
+(1, 1, 'Sanglier enragé', 50, 10, 10, 15, 'Images/monster/Wild_boar.jpg', NULL, 100),
+(2, 2, 'Loup noir', 40, 10, 12, 12, 'Images/monster/Wolf02.jpg', NULL, 150);
 
 -- --------------------------------------------------------
 
@@ -394,7 +487,7 @@ CREATE TABLE IF NOT EXISTS `npc` (
   `npc_description` text,
   PRIMARY KEY (`npc_id`),
   UNIQUE KEY `encounter_id` (`encounter_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -409,7 +502,7 @@ CREATE TABLE IF NOT EXISTS `shop` (
   `price` int DEFAULT NULL,
   PRIMARY KEY (`npc_id`,`item_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -428,7 +521,33 @@ CREATE TABLE IF NOT EXISTS `spell` (
   `learning_level` int NOT NULL,
   PRIMARY KEY (`spell_id`),
   KEY `class_id` (`class_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Déchargement des données de la table `spell`
+--
+
+INSERT INTO `spell` (`spell_id`, `class_id`, `spell_name`, `spell_description`, `dice_count`, `mana_cost`, `learning_level`) VALUES
+(1, 1, 'Coup puissant', 'Inflige un lourd coup qui brise la défense ennemie.', 4, 20, 1),
+(2, 1, 'Cri de guerre', 'Augmente la puissance des alliés et diminue celle des ennemis à proximité.', 0, 30, 4),
+(3, 1, 'Charge', 'Charge vers un ennemi, infligeant des dégâts et le repoussant.', 3, 15, 2),
+(4, 1, 'Provocation', 'Force l\'ennemi à vous attaquer pendant un certain temps.', 0, 10, 3),
+(5, 1, 'Rage', 'Augmente votre vitesse d\'attaque et vos dégâts pendant quelques secondes.', 0, 20, 5),
+(6, 2, 'Frappe sacrée', 'Inflige des dégâts supplémentaires en fonction de la foi du Paladin.', 5, 25, 1),
+(7, 2, 'Bouclier divin', 'Crée un bouclier magique qui protège contre les attaques physiques.', 0, 20, 2),
+(8, 2, 'Aura de guérison', 'Soigne progressivement tous les alliés autour du Paladin.', 0, 30, 4),
+(9, 2, 'Jugement', 'Inflige de lourds dégâts à l\'ennemi en fonction de ses péchés.', 6, 50, 5),
+(10, 2, 'Bénédiction', 'Augmente la défense et les capacités de soin de tous les alliés proches.', 0, 15, 3),
+(11, 3, 'Boule de feu', 'Lance une boule de feu infligeant des dégâts à une zone cible.', 4, 20, 1),
+(12, 3, 'Éclair', 'Lance un éclair qui inflige des dégâts à un ennemi à distance.', 3, 15, 2),
+(13, 3, 'Gel', 'Gèle un ennemi, le ralentissant considérablement.', 0, 10, 3),
+(14, 3, 'Téléportation', 'Permet de se déplacer instantanément à un endroit ciblé.', 0, 25, 5),
+(15, 3, 'Tempête magique', 'Crée une tempête qui inflige des dégâts à tous les ennemis proches.', 5, 40, 4),
+(16, 4, 'Coup sournois', 'Inflige des dégâts rapides et critiques lorsque l\'ennemi ne vous voit pas venir.', 2, 10, 1),
+(17, 4, 'Poison', 'L\'ennemi subit des dégâts sur le temps.', 1, 15, 3),
+(18, 4, 'Disparition', 'Permet de disparaître momentanément et devenir invisible aux ennemis.', 0, 20, 5),
+(19, 4, 'Voleur d\'âme', 'Vol de la vie de l\'ennemi, récupérant une partie de ses PV.', 1, 25, 7),
+(20, 4, 'Attaque rapide', 'Inflige une série d\'attaques rapides à l\'ennemi.', 3, 12, 2);
 
 -- --------------------------------------------------------
 
@@ -445,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `treasure` (
   `quantity` int NOT NULL,
   PRIMARY KEY (`treasure_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -458,11 +577,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `users_image` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `users_image` longtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `users`
@@ -487,7 +606,7 @@ CREATE TABLE IF NOT EXISTS `weapon` (
   `isTwoHanded` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`weapon_id`),
   UNIQUE KEY `item_id` (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Déchargement des données de la table `weapon`

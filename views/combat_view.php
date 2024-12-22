@@ -64,7 +64,7 @@
                     <?php echo $HerocurrentMana . " / " . $HeromaxMana . " Mana"; ?>
                 </p>
             </div>
-
+            <?php if ($monster->isAlive() and $hero->isAlive()): ?>
             <div class="actions grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
                 <form method="POST" action="attack" class="w-full">
                     <button type="submit"
@@ -83,12 +83,14 @@
                         <!-- Tooltip avec description du sort, visible uniquement au survol -->
                         <div
                             class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-800 text-white text-sm rounded-lg px-4 py-2 w-64 text-center z-10">
-                            <?php echo nl2br(htmlspecialchars($spell->getDescription())); ?>
+                            <?php echo "<p>".htmlspecialchars($spell->getDescription())."</p>"; 
+                                echo "<p>"."Coût en Mana : ".htmlspecialchars($spell->getManaCost())."</p>";
+                            ?>
                         </div>
                     </form>
                 <?php endforeach; ?>
             </div>
-
+            <?php endif; ?>
 
 
 
@@ -142,6 +144,7 @@
                     <?php modifieBase(connexionDb(), "update combat set ongoing = 0 where monster_id = " . $monster->getId() . " and hero_id = " . $user->getHero()->getHeroId() . " and chapter_id = " . $user->getHero()->getChapter()); ?>
                 <?php elseif (!$monster->isAlive()): ?>
                     <p>Vous avez vaincu le monstre !</p>
+                    <p>Appuyer sur le bouton pour sauvegarder et continuer votre Quêtes</p>
                     <form method="post" action="chapter">
                         <input type="hidden" name="xp" value="<?php echo htmlspecialchars($monster->getExperienceValue()); ?>">
                         <input type="hidden" name="loot" value="<?php $loot = $monster->getLoot();
