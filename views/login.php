@@ -49,7 +49,7 @@
 
                 <!-- Texte décoratif ou sous-titre -->
                 <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Connexion au compte</p>
-                <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Vous n'avez pas de compte <a href="login" class="text-accentGold underline">Cliquez ici pour en creer un</a></p>
+                <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Vous n'avez pas de compte <a href="register" class="text-accentGold underline">Cliquez ici pour en creer un</a></p>
             </div>
         </div>
 

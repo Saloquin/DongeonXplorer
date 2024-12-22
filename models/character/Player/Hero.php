@@ -211,15 +211,30 @@ class Hero
     
     public function setMana($mana){
         $this->mana = $mana;
+        modifieBase(connexionDb(),"update hero set mana=". $this->mana.' where hero_id = '.$this->id_hero);
     }
 
     public function setPv($pv){
         $this->pv = $pv;
+        modifieBase(connexionDb(),"update hero set pv=". $this->pv.' where hero_id = '.$this->id_hero);
     }
     
     public function takeDamage($damage) {
         $this->pv -= $damage;
         if($this->pv < 0) $this->pv = 0;
+        modifieBase(connexionDb(), "UPDATE hero SET pv = " . $this->getPv() . " WHERE hero_id = " . $this->getHeroId());
+
+    }
+    public function heal($pv) {
+        $this->pv += $pv;
+        if($this->pv > $this->pv_max) $this->pv = $this->pv_max;
+        modifieBase(connexionDb(), "UPDATE hero SET pv = " . $this->getPv() . " WHERE hero_id = " . $this->getHeroId());
+    }
+
+    public function mana_heal($mana) {
+        $this->mana += $mana;
+        if($this->mana > $this->mana_max) $this->mana = $this->mana_max;
+        modifieBase(connexionDb(), "UPDATE hero SET mana = " . $this->getMana() . " WHERE hero_id = " . $this->getHeroId());
     }
     public function getPvMax() {
         return $this->pv_max;

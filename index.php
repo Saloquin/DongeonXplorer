@@ -186,8 +186,10 @@ $router->addRoutePost('register', 'RegisterController@register', ['checkNoAuth']
 
 $router->addRoutePost('attack', 'CombatController@attack', ['checkAuth','checkHero']); 
 $router->addRoutePost('cast_spell', 'CombatController@castSpell', ['checkAuth','checkHero']); 
-$router->addRouteGet('attack', 'ChapterController@show', ['checkAuth','checkHero']); 
-$router->addRouteGet('cast_spell', 'ChapterController@show', ['checkAuth','checkHero']); 
+$router->addRoutePost('use_item', 'CombatController@useItem', ['checkAuth','checkHero']);
+$router->addRouteGet('attack', 'CombatController@show', ['checkAuth','checkHero']); 
+$router->addRouteGet('cast_spell', 'CombatController@show', ['checkAuth','checkHero']); 
+$router->addRouteGet('use_item', 'CombatController@show', ['checkAuth','checkHero']);
 
 
 // Appel de la méthode route
