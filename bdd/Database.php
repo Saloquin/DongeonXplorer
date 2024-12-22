@@ -44,6 +44,5 @@ function lireBase($base_conn, $sql_verif) {
 
 function modifieBase($base_conn, $sql) {
     $stmt = $base_conn->prepare($sql);
-    var_dump($stmt);
     return $stmt->execute();
 }

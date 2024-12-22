@@ -1,29 +1,15 @@
 <?php
 require_once "models/character/Player/Classe.php";
-
-require_once "models/character/Player/Guerrier.php";
-
-require_once "models/character/Player/Magicien.php";
-
-require_once "models/character/Player/Paladin.php";
-
-require_once "models/character/Player/Voleur.php";
+require_once "bdd/Database.php";
 class Taverne
 {
     private $classes = [];
 
     public function __construct()
     {
-        $directory = __DIR__;
-        $files = scandir($directory);
-        foreach ($files as $file) {
-            if ($file !== 'Taverne.php' && $file !== 'Classe.php' && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
-                $className = pathinfo($file, PATHINFO_FILENAME);
-                if (class_exists($className)) {
-                    $this->classes[$className] = new $className();
-                }
-                
-            }
+        $tab=lireBase(connexionDb(),'select * from class');
+        foreach($tab as $row){
+            $this->classes[$row['class_name']] = new Classe($row['class_id']);
         }
     }
 

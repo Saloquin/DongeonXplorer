@@ -26,19 +26,18 @@ class LoginController {
 
             // Logic to authenticate user
             if ($this->authenticate($username, $password)) {
-                $_SESSION['user'] = $username;
+                $_SESSION['user'] = lireBase(connexionDb(), "select user_id from users where username = '".$username."'")[0]["user_id"];
                 header('Location:  profil');
                 exit();
             } else {
                 // Handle login failure
-                $error = "Peusdo ou mot de passe incorrect";
+                $_SESSION['error']="Peusdo ou mot de passe incorrect";
                 header('Location:  login');
             }
             
     }
 
     private function authenticate($username, $password) {
-        $pseudo = htmlspecialchars($username);
         $password = htmlspecialchars($password);
         $sql_verif="select * from users where username = '". $username."'";
         $db = connexionDb();

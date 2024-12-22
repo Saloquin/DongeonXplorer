@@ -4,8 +4,8 @@
     <?php include_once('views/template/navbar.php') ?>
 
     <!-- Logo Under Navbar -->
-    <div class="flex justify-center mt-8">
-        <img src="/DongeonXplorer/Images/icon/Logo.ico" alt="DungeonXplorer Logo" class="h-64" />
+    <div class="flex justify-center mt-2">
+        <img src="/DongeonXplorer/Images/icon/Logo.ico" alt="DungeonXplorer Logo" class="h-40" />
     </div>
 
     <!-- Main Content -->
@@ -30,7 +30,7 @@
             au cœur des mystères du Val Perdu !
         </p>
         <div class="flex justify-center">
-            <a href="player_selection"
+            <a href="chapter"
                 class="bg-accentGreen hover:bg-accentGold text-textMain py-2 px-4 rounded text-center">
                 Commencer l'Aventure
             </a>

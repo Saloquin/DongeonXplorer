@@ -1,4 +1,5 @@
 <?php
+require 'autoload.php';
 session_start();
 DEFINE('DIR_ROOT', dirname(__FILE__));
 DEFINE('URL_ROOT', 'http://127.0.0.1/DongeonXplorer');
@@ -6,8 +7,8 @@ DEFINE('URL_ROOT', 'http://127.0.0.1/DongeonXplorer');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require_once 'models/User.php';
-require 'autoload.php';
+
+
 
 
 class Router
@@ -134,24 +135,59 @@ function checkNoAuth()
     }
 }
 
+function checkNoHero()
+{
+    if (isset($_SESSION['user'])) {
+        $user = new User($_SESSION['user']);
+        if($user->possedeHero()){
+            header('Location: profil');
+            exit();
+        } 
+    }
+}
+
+function checkHero()
+{
+    if (isset($_SESSION['user'])) {
+        $user = new User($_SESSION['user']);
+        if(!$user->possedeHero()){
+            header('Location: player_selection');
+            exit();
+        } 
+    }
+}
+
 
 // Instanciation du routeur
 $router = new Router('DongeonXplorer');
 
 // Ajout des routes
 $router->addRouteGet('profil', 'ProfilController@index', ['checkAuth']);
-$router->addRouteGet('player_selection', 'Player_selectionController@index');
+$router->addRoutePost('profil', 'ProfilController@changePP', ['checkAuth']);
+
+$router->addRouteGet('delete_hero', 'ProfilController@deleteHero', ['checkAuth']);
+
+$router->addRouteGet('player_selection', 'Player_selectionController@index',['checkAuth','checkNoHero']);
+$router->addRoutePost('creation_hero', 'Player_selectionController@CreateHero',['checkAuth','checNokHero']);
 
 $router->addRouteGet('home', 'HomeController@index');
 $router->addRouteGet('', 'HomeController@index');
 
-$router->addRouteGet('chapter/{id}', 'ChapterController@show');
+$router->addRouteGet('chapter', 'ChapterController@show', ['checkAuth','checkHero']);
+$router->addRoutePost('chapter', 'ChapterController@show', ['checkAuth','checkHero']);
+
 $router->addRouteGet('login', 'LoginController@index', ['checkNoAuth']); 
 $router->addRoutePost('login', 'LoginController@login', ['checkNoAuth']);
+
 $router->addRouteGet('logout', 'LoginController@logout', ['checkAuth']);  
 //register
 $router->addRouteGet('register', 'RegisterController@index', ['checkNoAuth']); 
 $router->addRoutePost('register', 'RegisterController@register', ['checkNoAuth']); 
+
+$router->addRoutePost('attack', 'CombatController@attack', ['checkAuth','checkHero']); 
+$router->addRoutePost('cast_spell', 'CombatController@castSpell', ['checkAuth','checkHero']); 
+$router->addRouteGet('attack', 'ChapterController@show', ['checkAuth','checkHero']); 
+$router->addRouteGet('cast_spell', 'ChapterController@show', ['checkAuth','checkHero']); 
 
 
 // Appel de la méthode route
