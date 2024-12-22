@@ -23,9 +23,12 @@ class CombatController
         $monster = new Monster($monster_id);
 
         // L'attaque du héros
-        $damage = $hero->attack($monster); // Calcul des dégâts de l'attaque
+        $monsterDamage = $hero->attack($monster); // Calcul des dégâts de l'attaque
         // L'attaque du monstre
-        $monsterDamage = $monster->attack($hero);
+        $heroDamage = $monster->attack($hero);
+
+        $_SESSION['heroDamage'] = $heroDamage;
+        $_SESSION['monsterDamage'] = $monsterDamage;
 
         // Mise à jour des PV du héros sans toucher au monstre
 
@@ -38,6 +41,7 @@ class CombatController
     {
         $user = new User($_SESSION['user']);
         $hero = $user->getHero();
+        $_SESSION['heroLife'] = $hero->getPv();
         $chapter = new Chapter($user->getHero()->getChapter());
         $spell_id = $_POST['spell_id'];
 
@@ -52,9 +56,13 @@ class CombatController
             }
         }
         if ($user->getHero()->getMana() >= $spell_cast->getManaCost()) {
-            $damage = $hero->castSpell($monster, $spell_cast);
+            $monsterDamage = $hero->castSpell($monster, $spell_cast);
 
-            $monsterDamage = $monster->attack($hero);
+            $heroDamage = $monster->attack($hero);
+
+            $_SESSION['spellCost'] = $spell_cast->getManaCost();
+            $_SESSION['heroDamage'] = $heroDamage;
+            $_SESSION['monsterDamage'] = $monsterDamage;
 
         }
         include 'views/combat_view.php';
