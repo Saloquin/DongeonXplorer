@@ -21,6 +21,7 @@ class ChapterController
 
     public function show(){
     $user = new User($_SESSION['user']);
+    $user->getHero()->addExp(0);
 
     if (isset($_POST['chapter_id']) && is_numeric($_POST['chapter_id'])) {   
         if (isset($_POST['end_combat']) && is_numeric($_POST['end_combat'])) {
@@ -71,6 +72,7 @@ class ChapterController
         if ($enc[0]["entity_type"] == "npc") {
             include 'views/npc_view.php';
         } else {
+            
             $this->startCombat();
         }
     }

@@ -18,21 +18,16 @@ class CombatController
         $hero = $user->getHero();
         $chapter = new Chapter($user->getHero()->getChapter());
 
-        // Récupérer un monstre de l'instance actuelle du chapitre
+        
         $monster_id = lireBase(connexionDb(), "SELECT monster_id FROM monster join encounter using (encounter_id) WHERE chapter_id = " . $chapter->getId())[0]['monster_id'];
         $monster = new Monster($monster_id);
 
-        // L'attaque du héros
-        $monsterDamage = $hero->attack($monster); // Calcul des dégâts de l'attaque
-        // L'attaque du monstre
+        
+        $monsterDamage = $hero->attack($monster); 
         $heroDamage = $monster->attack($hero);
 
         $_SESSION['heroDamage'] = $heroDamage;
         $_SESSION['monsterDamage'] = $monsterDamage;
-
-        // Mise à jour des PV du héros sans toucher au monstre
-
-        // Réactualiser l'interface de combat
         include 'views/combat_view.php';
     }
 
@@ -82,8 +77,10 @@ class CombatController
         $hero->getInventory()->removeItem($consumable->getItemId());
         $monster_id = lireBase(connexionDb(), "SELECT monster_id FROM monster join encounter using (encounter_id) WHERE chapter_id = " . $chapter->getId())[0]['monster_id'];
         $monster = new Monster($monster_id);
-        $monsterDamage = $monster->attack($hero);
+        $heroDamage = $monster->attack($hero);
         
+        $_SESSION['heroDamage'] = $heroDamage;
+
         include 'views/combat_view.php';
     }
 

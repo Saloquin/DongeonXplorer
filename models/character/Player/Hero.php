@@ -67,13 +67,10 @@ class Hero
     }
 
 
-    
 
     public function addExp($nb_xp){
-        $this->xp+=$nb_xp;
-        $tab=lireBase(connexionDb(), "SELECT  required_xp FROM hero join class using(class_id) join level using(class_id)  WHERE user_id=" . $this->id_joueur." and level = ".$this->current_level);
-      
-        if($nb_xp>=$this->getXpRequired()){
+        $this->xp+=$nb_xp;      
+        while($this->xp >= $this->getXpRequired()){
             $this->xp -= $this->getXpRequired();
             $this->addLevel();
         }
@@ -183,7 +180,7 @@ class Hero
     }
 
     public function getXpRequired() {
-        $tab=lireBase(connexionDb(), "SELECT  required_xp FROM hero join class using(class_id) join level using(class_id)  WHERE user_id=" . $this->id_joueur." and level = ".$this->current_level+1);
+        $tab=lireBase(connexionDb(), "SELECT  required_xp FROM hero join class using(class_id) join level using(class_id)  WHERE user_id=" . $this->id_joueur." and level = ".$this->current_level."+1");
         if (isset($tab[0]['required_xp']))
             return $tab[0]['required_xp'];
         else return 1000000;
