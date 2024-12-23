@@ -14,7 +14,7 @@ class Combat {
 
         // Boucle jusqu'à ce qu'un personnage meure
         while ($attaquant->base_health > 0 && $defenseur->base_health > 0) {
-            echo "Combat en cours...\n";
+            //echo "Combat en cours...\n";
         }
 
         return $attaquant->base_health > 0 ? "L'attaquant a gagné !" : "Le défenseur a gagné !";

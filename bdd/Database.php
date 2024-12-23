@@ -1,8 +1,4 @@
-
 <?php
-
-
-
 function connexionDb(){
 
     // Chemin vers le fichier .env
@@ -29,20 +25,21 @@ function connexionDb(){
         // Définition des attributs de PDO pour afficher les erreurs
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $db;
-    } catch (PDOException $e) {
-        echo "Erreur de connexion à la base de données : " . $e->getMessage();   
+    } catch (PDOException $e) {  
      }
      return null;
 }
 
 
 function lireBase($base_conn, $sql_verif) {
+    $sql_verif = strtolower($sql_verif);
     $stmt = $base_conn->prepare($sql_verif);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function modifieBase($base_conn, $sql) {
+    $sql = strtolower($sql);
     $stmt = $base_conn->prepare($sql);
     return $stmt->execute();
 }

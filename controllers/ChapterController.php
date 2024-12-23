@@ -41,7 +41,7 @@ class ChapterController
         );
 
         if (!$result) {
-            echo "Erreur : impossible de mettre à jour le chapitre.";
+            //echo "Erreur : impossible de mettre à jour le chapitre.";
             return;
         }
         $user->getHero()->setChapter($chapterId);
@@ -51,7 +51,7 @@ class ChapterController
     
 
     if (!$chapter) {
-        echo "Erreur : chapitre non trouvé.";
+        //echo "Erreur : chapitre non trouvé.";
         return;
     }
 

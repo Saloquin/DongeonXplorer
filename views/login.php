@@ -14,7 +14,7 @@
                 <p class="text-center text-sm text-gray-400 italic mb-6">Connexion à votre compte</p>
                 <p class="text-center text-sm text-red-400 italic mb-6">
                     <?php if (isset($_SESSION['error'])) {
-                        echo $_SESSION['error'];
+                        //echo $_SESSION['error'];
                         unset($_SESSION['error']);
                     } ?>
                 </p>
