@@ -76,8 +76,9 @@
         
         ?>
         <div class="flex justify-between mt-4">
-            <a id="openModal" class="bg-accentGold text-textMain py-2 px-4 rounded">Changer Avatar</a>
+    
             <?php if ($user->possedeHero()): ?>
+                <a id="openModal" class="bg-accentGold text-textMain py-2 px-4 rounded">Changer Avatar</a>
                 <a href="javascript:void(0);" onclick="confirmDelete()"
                     class="bg-red-600 text-white py-2 px-4 rounded">Supprimer
                     son hero</a>

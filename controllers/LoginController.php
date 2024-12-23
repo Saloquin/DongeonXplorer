@@ -28,7 +28,7 @@ class LoginController {
             if ($this->authenticate($username, $password)) {
                 $_SESSION['user'] = lireBase(connexionDb(), "select user_id from users where username = '".$username."'")[0]["user_id"];
                 header('Location:  profil');
-                exit();
+
             } else {
                 // Handle login failure
                 $_SESSION['error']="Peusdo ou mot de passe incorrect";
@@ -42,7 +42,6 @@ class LoginController {
         $sql_verif="select * from users where username = '". $username."'";
         $db = connexionDb();
         $tab = lireBase($db, $sql_verif);
-        var_dump($tab);
 
         if(count($tab) == 1 && password_verify($password, $tab[0]['password'])){
             return true;
@@ -53,7 +52,4 @@ class LoginController {
 
     }
 
-
-
-   
 }
