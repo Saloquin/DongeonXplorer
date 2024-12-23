@@ -21,8 +21,12 @@ class ChapterController
 
     public function show(){
     $user = new User($_SESSION['user']);
+    $user->getHero()->addExp(0);
 
     if (isset($_POST['chapter_id']) && is_numeric($_POST['chapter_id'])) {   
+        if (isset($_POST['end_combat']) && is_numeric($_POST['end_combat'])) {
+            modifieBase(connexionDb(), "update combat set ongoing = 0 where hero_id = " . $user->getHero()->getHeroId() . " and chapter_id = " . $user->getHero()->getChapter());
+        }
         if (isset($_POST['xp']) && is_numeric($_POST['xp'])) {
             $user->getHero()->addExp($_POST['xp']);
         }
@@ -37,7 +41,7 @@ class ChapterController
         );
 
         if (!$result) {
-            echo "Erreur : impossible de mettre à jour le chapitre.";
+            //echo "Erreur : impossible de mettre à jour le chapitre.";
             return;
         }
         $user->getHero()->setChapter($chapterId);
@@ -47,7 +51,7 @@ class ChapterController
     
 
     if (!$chapter) {
-        echo "Erreur : chapitre non trouvé.";
+        //echo "Erreur : chapitre non trouvé.";
         return;
     }
 
@@ -68,6 +72,7 @@ class ChapterController
         if ($enc[0]["entity_type"] == "npc") {
             include 'views/npc_view.php';
         } else {
+            
             $this->startCombat();
         }
     }

@@ -17,7 +17,7 @@
     <img src="<?php echo htmlspecialchars($chapter->getImage()); ?>" alt="Image de chapitre" class="w-full max-w-xl mx-auto mb-6">
 
     <!-- Description -->
-    <p class="text-lg md:text-xl mb-6">
+    <p class="text-lg md:text-xl p-4 text-justify mb-6">
         <?php echo nl2br(htmlspecialchars($chapter->getDescription())); ?>
     </p>
 

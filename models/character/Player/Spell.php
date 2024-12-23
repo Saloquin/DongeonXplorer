@@ -48,7 +48,6 @@ class Spell {
     
     public function cast($hero) {
         $hero->setMana($hero->getMana() - $this->manaCost);
-        modifieBase(connexionDb(), "UPDATE hero SET mana = ".$hero->getMana()." WHERE hero_id = ".$hero->getHeroId());
         $damage = rollDice($this->diceCount) + $hero->getStrength();
         return $damage; 
     }

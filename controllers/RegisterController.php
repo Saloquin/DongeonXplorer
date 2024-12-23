@@ -18,8 +18,8 @@ class RegisterController {
             return ;
         }
         else {
-            $sql="insert into users(username,password) values ('".$username."', '".password_hash($password, PASSWORD_DEFAULT)."')";
-            echo $sql;
+            $sql = "INSERT INTO users (username, password, users_image) 
+        VALUES ('".$username."', '".password_hash($password, PASSWORD_DEFAULT)."', 'https://i.pinimg.com/236x/87/9c/bb/879cbbc0ab4d3ea2558969417d45e4f2.jpg')";
             modifieBase($db,$sql);
             $_SESSION['user'] = lireBase(connexionDb(), "select user_id from users where username = '".$username."'")[0]["user_id"];
             header('Location:  profil');

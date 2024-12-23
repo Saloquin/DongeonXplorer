@@ -25,7 +25,6 @@
     ?>
     <h1 class="text-4xl md:text-5xl font-bold text-center mb-6">
         <?php echo htmlspecialchars($chapter->getTitle()); ?>
-        <p><?php echo isset($_SESSION['spellCost']) ? $_SESSION['spellCost'] : 'No spell cost'; ?></p>
     </h1>
 
     <!-- Description -->
@@ -103,6 +102,53 @@
                         </div>
                     </form>
                 <?php endforeach; ?>
+                <form method="POST" action="use_item" class="w-full">
+                        <button type="button" onclick="openConsumablesPopup()"
+                            class="btn-combat bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 text-white py-3 px-8 rounded-lg font-semibold shadow-md transform transition duration-300 hover:scale-105 w-full">
+                            Utiliser Consommable
+                        </button>
+                    </form>
+
+                    <div id="consumablesPopup"
+                        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden transition-opacity duration-300 z-50">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3">
+                            <h2 class="text-2xl font-bold mb-4">Consommables</h2>
+                            <div class="grid grid-cols-1 gap-4">
+                                <?php foreach ($hero->getInventory()->getConsommables() as $item): ?>
+                                    <form method="POST" action="use_item" class="relative group w-full">
+                                        <button type="submit" name="item_id" value="<?php echo $item['item']->getItemId(); ?>"
+                                            class="btn-consumable bg-green-600 hover:bg-green-700 active:bg-green-800 text-white py-2 px-4 rounded-lg font-semibold shadow-md w-full relative">
+                                            <?php echo htmlspecialchars($item['item']->getName()); ?>
+                                            :
+                                            <?php echo htmlspecialchars($item['quantity']); ?>
+                                            <!-- Tooltip avec description -->
+                                            <span
+                                                class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-2 hidden group-hover:block bg-gray-800 text-white text-sm rounded-lg px-4 py-2 w-64 text-center z-10 shadow-lg">
+                                                <?php echo htmlspecialchars($item['item']->getDescription()); ?>
+                                            </span>
+                                        </button>
+                                    </form>
+                                <?php endforeach; ?>
+                            </div>
+                            <button type="button" onclick="closeConsumablesPopup()"
+                                class="mt-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white py-2 px-4 rounded-lg font-semibold shadow-md">
+                                Fermer
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <script>
+                        function openConsumablesPopup() {
+                            const popup = document.getElementById('consumablesPopup');
+                            popup.classList.remove('hidden');
+                        }
+
+                        function closeConsumablesPopup() {
+                            const popup = document.getElementById('consumablesPopup');
+                            popup.classList.add('hidden');
+                        }
+                    </script>
             </div>
             <?php endif; ?>
 
@@ -157,20 +203,23 @@
                 <?php if (!$hero->isAlive()): ?>
                     <p>Vous êtes mort !</p>
                     <form method="post" action="chapter">
+                        <input type="hidden" name="end_combat" value="1" >
                         <button type="submit" name="chapter_id" value="<?php echo $defeat['chapter_id']; ?>"
                             class="btn btn-primary px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                             <?php echo $defeat['link_description']; ?>
                         </button>
                     </form>
-                    <?php modifieBase(connexionDb(), "update combat set ongoing = 0 where monster_id = " . $monster->getId() . " and hero_id = " . $user->getHero()->getHeroId() . " and chapter_id = " . $user->getHero()->getChapter()); ?>
                 <?php elseif (!$monster->isAlive()): ?>
                     <p>Vous avez vaincu le monstre !</p>
                     <p>Appuyer sur le bouton pour sauvegarder et continuer votre Quêtes</p>
                     <form method="post" action="chapter">
                         <input type="hidden" name="xp" value="<?php echo htmlspecialchars($monster->getExperienceValue()); ?>">
-                        <input type="hidden" name="loot" value="<?php $loot = $monster->getLoot();
+                        <input type="hidden" name="loot" value="<?php $loot = $monster->getLoot();?>">
+                        <input type="hidden" name="end_combat" value="1"> 
+
+                        <?php
                         if ($loot)
-                            echo htmlspecialchars($monster->getLoot()); ?>">
+                            echo htmlspecialchars($monster->getLoot()); ?>
                         <button type="submit" name="chapter_id" value="<?php echo $victory['chapter_id']; ?>"
                             class="btn btn-primary px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
                             <?php echo $victory['link_description']; ?>
@@ -185,7 +234,6 @@
                         $tab = lireBase(connexionDb(), "select item_name from item join loot using (item_id) where loot_id=" . $loot);
                         echo "<p>Vous avez trouver " . $tab[0]["item_name"] . " </p>";
                     }
-                    modifieBase(connexionDb(), "update combat set ongoing = 0 where monster_id = " . $monster->getId() . " and hero_id = " . $user->getHero()->getHeroId() . " and chapter_id = " . $user->getHero()->getChapter());
                     ?>
                 <?php endif; ?>
             <?php endif; ?>
@@ -318,6 +366,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
     unset($_SESSION['spellCost']);
     ?>
 });
-
 </script>
 </html>

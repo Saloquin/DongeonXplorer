@@ -14,7 +14,7 @@
                 <p class="text-center text-sm text-gray-400 italic mb-6">Connexion à votre compte</p>
                 <p class="text-center text-sm text-red-400 italic mb-6">
                     <?php if (isset($_SESSION['error'])) {
-                        echo $_SESSION['error'];
+                        //echo $_SESSION['error'];
                         unset($_SESSION['error']);
                     } ?>
                 </p>
@@ -49,7 +49,7 @@
 
                 <!-- Texte décoratif ou sous-titre -->
                 <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Connexion au compte</p>
-                <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Vous n'avez pas de compte <a href="login" class="text-accentGold underline">Cliquez ici pour en creer un</a></p>
+                <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Vous n'avez pas de compte <a href="register" class="text-accentGold underline">Cliquez ici pour en creer un</a></p>
             </div>
         </div>
 

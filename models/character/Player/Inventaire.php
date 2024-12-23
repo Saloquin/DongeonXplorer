@@ -67,15 +67,15 @@ class Inventaire
         return $this->items;
     }
     
-    //public function getItem($item_id)
-    //{
-    //    foreach ($this->items as $item_entry) {
-    //        if ($item_entry['item']->getItemId() == $item_id) {
-    //            return $item_entry['item'];  // Retourner l'objet de l'item
-    //        }
-    //    }
-    //    return null; // Si l'item n'est pas trouvé, retourner null
-    //}
+    public function getItem($item_id)
+    {
+       foreach ($this->items as $item_entry) {
+            if ($item_entry['item']->getItemId() == $item_id) {
+                return $item_entry['item'];  // Retourner l'objet de l'item
+           }
+        }
+       return null; // Si l'item n'est pas trouvé, retourner null
+    }
 
     // Ajouter un item à l'inventaire
     public function addItem($item_id)
@@ -115,13 +115,34 @@ class Inventaire
                     // Si l'item a plusieurs exemplaires, réduire la quantité
                     $item_entry['quantity']--;
                     // Mettre à jour dans la base de données
-                    $query = "UPDATE inventaire SET quantity = quantity - 1 WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
+                    $query = "UPDATE inventory SET quantity = quantity - 1 WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
                     modifieBase(connexionDb(), $query);
                 } else {
                     // Si l'item n'a qu'un exemplaire, on le retire
                     unset($item_entry);
                     // Supprimer de la base de données
-                    $query = "DELETE FROM inventaire WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
+                    $query = "DELETE FROM inventory WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
+                    modifieBase(connexionDb(), $query);
+                }
+                break;
+            }
+        }
+    }
+    public function removeItemWithQuantity($item_id, $quantity)
+    {
+        foreach ($this->items as &$item_entry) {
+            if ($item_entry['item']->getItemId() == $item_id) {
+                if ($item_entry['quantity'] > $quantity) {
+                    // Si l'item a plus d'exemplaires que la quantité à retirer, réduire la quantité
+                    $item_entry['quantity'] -= $quantity;
+                    // Mettre à jour dans la base de données
+                    $query = "UPDATE inventory SET quantity = quantity - " . $quantity . " WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
+                    modifieBase(connexionDb(), $query);
+                } else {
+                    // Si l'item a moins ou exactement la quantité à retirer, on le retire complètement
+                    unset($item_entry);
+                    // Supprimer de la base de données
+                    $query = "DELETE FROM inventory WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
                     modifieBase(connexionDb(), $query);
                 }
                 break;
@@ -133,5 +154,16 @@ class Inventaire
             $total += $item_entry['quantity'];
         }
         return $total;
+    }
+    // Obtenir la liste des consommables
+    public function getConsommables()
+    {
+        $consommables = [];
+        foreach ($this->items as $item_entry) {
+            if ($item_entry['item'] instanceof Consumable) {
+                $consommables[] = $item_entry;
+            }
+        }
+        return $consommables;
     }
 }

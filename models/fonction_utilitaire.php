@@ -1,5 +1,4 @@
 <?php
-
 function rollDice($numberOfDice)
 {
     $sum = 0;
