@@ -60,10 +60,12 @@ class User
         }
     }
 
+    
     public function getImage()
     {
-        return $this->image;
+        return $this->getHero()->getImage();
     }
+
 
     public function setImage($image)
     {

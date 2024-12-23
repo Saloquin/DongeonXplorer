@@ -10,7 +10,6 @@ error_reporting(E_ALL);
 
 
 
-
 class Router
 {
     private $getRoutes = [];
