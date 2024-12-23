@@ -116,6 +116,11 @@ class Hero
         return $damage; // Retourne les dégâts infligés par le sort
     }
     
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+    
     public function isAlive() {
         return $this->pv > 0;
     }

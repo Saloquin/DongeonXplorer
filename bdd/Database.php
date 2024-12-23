@@ -32,14 +32,14 @@ function connexionDb(){
 
 
 function lireBase($base_conn, $sql_verif) {
-    $sql_verif = strtolower($sql_verif);
+    //$sql_verif = strtolower($sql_verif);
     $stmt = $base_conn->prepare($sql_verif);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function modifieBase($base_conn, $sql) {
-    $sql = strtolower($sql);
+    //$sql = strtolower($sql);
     $stmt = $base_conn->prepare($sql);
     return $stmt->execute();
 }
