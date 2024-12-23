@@ -12,16 +12,18 @@ class ProfilController
         $user= new User($_SESSION['user']);
         $image = $_POST['avatarUrl'];
         $image = htmlspecialchars($image);
-        $req = "select count(*) as nb from users where users_image = '" . $image . "' and user_id = " . $user->getId();
+        $req = "select count(*) as nb from hero where image = '" . $image . "' and user_id = " . $user->getId();
         $db = connexionDb();
         if (lireBase($db, $req)[0]['nb'] != 1) {
-            $stmt = $db->prepare("UPDATE users SET users_image = :image WHERE user_id = :id");
+            $stmt = $db->prepare("UPDATE hero SET image = :image WHERE user_id = :id");
             $stmt->execute([
                 ':image' => $image,
                 ':id' => $user->getId(),
             ]);
         }
-        $user->setImage($image);
+        if($user->getHero() != null){
+            $user->getHero()->setImage($image);
+        }
         header('Location: profil');
     }
 

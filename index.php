@@ -2,11 +2,11 @@
 require 'autoload.php';
 session_start();
 DEFINE('DIR_ROOT', dirname(__FILE__));
-DEFINE('URL_ROOT', 'https://dev-dx07.users.info.unicaen.fr/DongeonXplorer');
+DEFINE('URL_ROOT', 'http://127.0.0.1/DongeonXplorer');
 
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 
@@ -185,10 +185,8 @@ $router->addRoutePost('register', 'RegisterController@register', ['checkNoAuth']
 
 $router->addRoutePost('attack', 'CombatController@attack', ['checkAuth','checkHero']); 
 $router->addRoutePost('cast_spell', 'CombatController@castSpell', ['checkAuth','checkHero']); 
-$router->addRoutePost('use_item', 'CombatController@useItem', ['checkAuth','checkHero']);
-$router->addRouteGet('attack', 'CombatController@show', ['checkAuth','checkHero']); 
-$router->addRouteGet('cast_spell', 'CombatController@show', ['checkAuth','checkHero']); 
-$router->addRouteGet('use_item', 'CombatController@show', ['checkAuth','checkHero']);
+$router->addRouteGet('attack', 'ChapterController@show', ['checkAuth','checkHero']); 
+$router->addRouteGet('cast_spell', 'ChapterController@show', ['checkAuth','checkHero']); 
 
 
 // Appel de la méthode route
