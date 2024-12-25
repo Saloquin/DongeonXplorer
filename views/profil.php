@@ -19,7 +19,7 @@
             <div
                 class="w-32 h-32 rounded-full bg-gray-700 flex items-center justify-center text-xl text-textMain font-semibold">
                 <?php if ($user->getHero() != null): ?>
-                    <img src="<?php echo $user->getHero()->getImage(); ?>" alt="" class="w-full h-full rounded-full object-cover">
+                    <img src="<?php echo $user->getHero()->getImage(); ?>" alt="image de votre héro" class="w-full h-full rounded-full object-cover">
                 <?php else: ?>
                     <span>Avatar</span><!-- Remplace avec une image d'utilisateur si disponible -->
                 <?php endif; ?>

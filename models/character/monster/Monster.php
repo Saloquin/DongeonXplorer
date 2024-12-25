@@ -15,46 +15,50 @@ class Monster
     private $image;
     private $loot;
     private $xp;
-    private $attack_list= array();
+    private $attack_list = array();
 
-    public function __construct($monster_id){
+    public function __construct($monster_id)
+    {
         $user = new User($_SESSION['user']);
-        $tab = lireBase(connexionDb(),"SELECT * FROM monster WHERE monster_id = ".$monster_id );
+        $tab = lireBase(connexionDb(), "SELECT * FROM monster WHERE monster_id = " . $monster_id);
 
-        
+
         $this->id = $tab[0]['monster_id'];
         $this->name = $tab[0]['monster_name'];
         $this->pv_max = $tab[0]['pv'];
         $this->mana_max = $tab[0]['mana'];
         $this->pv = $tab[0]['pv'];
-        $this->mana= $tab[0]['mana'];
+        $this->mana = $tab[0]['mana'];
         $this->strength = $tab[0]['strength'];
         $this->initiative = $tab[0]['initiative'];
         $this->image = $tab[0]['image'];
         $this->loot = $tab[0]['loot_id'];
         $this->xp = $tab[0]['xp'];
 
-        
 
-        $attackQuery = "SELECT attack_id FROM attack WHERE monster_id = ".$this->getId(); ;
+
+        $attackQuery = "SELECT attack_id FROM attack WHERE monster_id = " . $this->getId();
+        ;
         $attacks = lireBase(connexionDb(), $attackQuery);
 
         foreach ($attacks as $attack) {
-            $attackObject = new Attack($attack['attack_id']); 
-            $this->attack_list[] = $attackObject; 
+            $attackObject = new Attack($attack['attack_id']);
+            $this->attack_list[] = $attackObject;
         }
     }
 
-    public function attack(Hero $hero) {
-        $damage = rollDice(1) + $this->strength; 
+    public function attack(Hero $hero)
+    {
+        $damage = rollDice(1) + $this->strength;
         $hero->takeDamage($damage);
         return $damage;
     }
-    
-    public function isAlive() {
+
+    public function isAlive()
+    {
         return $this->pv > 0;
     }
-    
+
 
     public function getId()
     {
@@ -93,7 +97,7 @@ class Monster
     public function getAttack()
     {
         return $this->attack_list;
-    }   
+    }
 
     public function getInitiative()
     {
@@ -118,8 +122,8 @@ class Monster
     {
         $user = new User($_SESSION['user']);
         $this->pv -= $damage;
-        $sql="update combat set monster_pv = monster_pv-".$damage." where monster_id = ".$this->id." and hero_id = ".$user->getHero()->getHeroId()." and chapter_id = ".$user->getHero()->getChapter()." and ongoing = 1 ";
-        modifieBase(connexionDb(),$sql);
+        $sql = "update combat set monster_pv = monster_pv-" . $damage . " where monster_id = " . $this->id . " and hero_id = " . $user->getHero()->getHeroId() . " and chapter_id = " . $user->getHero()->getChapter() . " and ongoing = 1 ";
+        modifieBase(connexionDb(), $sql);
     }
 
     public function setPv($pv)
@@ -131,7 +135,7 @@ class Monster
         $this->mana = $mana;
     }
 
-    
 
-    
+
+
 }

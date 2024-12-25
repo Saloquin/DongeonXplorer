@@ -1,6 +1,8 @@
 <?php
-class Combat {
-    public function tourCombat($attaquant, $defenseur) {
+class Combat
+{
+    public function tourCombat($attaquant, $defenseur)
+    {
         // Calcul de l'initiative
         $initiativeAttaquant = rand(1, 6) + $attaquant->initiative;
         $initiativeDefenseur = rand(1, 6) + $defenseur->initiative;

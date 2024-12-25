@@ -28,7 +28,7 @@
                         'background-home': "url('/DongeonXplorer/Images/background/home.jpg')",
                     },
                     backgroundSize: {
-                        'larger': '100%',  
+                        'larger': '100%',
                     },
                 },
             },

@@ -2,11 +2,11 @@
 require 'autoload.php';
 session_start();
 DEFINE('DIR_ROOT', dirname(__FILE__));
-DEFINE('URL_ROOT', 'http://127.0.0.1/DongeonXplorer');
+DEFINE('URL_ROOT', 'http://dev-dx07.users.info.unicaen.fr/DongeonXplorer');
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+//error_reporting(E_ALL);
 
 
 

@@ -7,8 +7,8 @@ class Taverne
 
     public function __construct()
     {
-        $tab=lireBase(connexionDb(),'select * from class');
-        foreach($tab as $row){
+        $tab = lireBase(connexionDb(), 'select * from class');
+        foreach ($tab as $row) {
             $this->classes[$row['class_name']] = new Classe($row['class_id']);
         }
     }

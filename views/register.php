@@ -5,7 +5,8 @@
     <?php include_once('views/template/navbar.php') ?>
 
     <!-- Espace pour que la navbar ne cache pas le contenu -->
-    <div class="pt-20"> <!-- Ajout de padding-top pour que le contenu ne soit pas caché sous la navbar -->
+    <div class="pt-20">
+        <!-- Ajout de padding-top pour que le contenu ne soit pas caché sous la navbar -->
 
         <!-- Formulaire de connexion -->
         <div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -51,7 +52,8 @@
 
                 <!-- Subtitle or Decorative Text -->
                 <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Création du compte</p>
-                <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Vous possedez déjà un compte <a href="login" class="text-accentGold underline">Cliquez ici pour vous
+                <p class="mt-8 text-center text-xs text-gray-400 tracking-widest">Vous possedez déjà un compte <a
+                        href="login" class="text-accentGold underline">Cliquez ici pour vous
                         connecter</a></p>
             </div>
         </div>

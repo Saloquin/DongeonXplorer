@@ -11,7 +11,7 @@ abstract class Item
 
     protected $item_image;
 
-    public function __construct($item_id, $name, $description,$item_image, $type_item)
+    public function __construct($item_id, $name, $description, $item_image, $type_item)
     {
         $this->item_id = $item_id;
         $this->name = $name;
@@ -20,26 +20,31 @@ abstract class Item
         $this->item_image = $item_image;
     }
 
-    
 
-    public function getItemId() {
+
+    public function getItemId()
+    {
         return $this->item_id;
     }
 
-    
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
-    public function getTypeItem() {
+    public function getTypeItem()
+    {
         return $this->type_item;
     }
 
-    public function getImage() {
+    public function getImage()
+    {
         return $this->item_image;
     }
 

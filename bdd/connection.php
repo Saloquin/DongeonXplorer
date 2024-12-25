@@ -7,12 +7,12 @@ if (isset($_POST['pseudo'])) {
     // Sécurise le pseudo avant de l'utiliser
     $pseudo = htmlspecialchars($_POST['pseudo']);
 
-    $sql_verif="select count(*) as cou from utilisateur where pseudo = '".$_POST['pseudo']."'";
+    $sql_verif = "select count(*) as cou from utilisateur where pseudo = '" . $_POST['pseudo'] . "'";
     $tab = array();
     lireBase($base_conn, $sql_verif, $tab);
-    if($tab[0]['cou']==0){
-        $sql="insert into utilisateur(pseudo)values ('".$_POST['pseudo']."')";
-        modifieBase($base_conn,$sql);
+    if ($tab[0]['cou'] == 0) {
+        $sql = "insert into utilisateur(pseudo)values ('" . $_POST['pseudo'] . "')";
+        modifieBase($base_conn, $sql);
     }
 
     // Stocke le pseudo dans la session

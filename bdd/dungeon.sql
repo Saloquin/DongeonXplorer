@@ -144,9 +144,9 @@ CREATE TABLE IF NOT EXISTS `class` (
 --
 
 INSERT INTO `class` (`class_id`, `class_name`, `class_description`, `base_pv`, `base_mana`, `strength`, `initiative`, `class_image`, `max_items`) VALUES
-(1, 'Guerrier', 'Un combattant spécialisé dans les armes et la défense', 150, 50, 20, 15, '/DongeonXplorer/Images/classe/Berserker.jpg', 5),
-(2, 'Paladin', 'Un combattant sacré, entre le guerrier et le magicien', 120, 100, 18, 12, '/DongeonXplorer/Images/classe/paladin.jpg', 5),
-(3, 'Magicien', 'Un utilisateur de magie avec une faible défense mais une grande puissance magique', 80, 150, 5, 10, '/DongeonXplorer/Images/classe/Magician01.jpg', 3),
+(1, 'Guerrier', 'Un combattant spécialisé dans les armes et la défense', 150, 50, 20, 15, './Images/classe/Berserker.jpg', 5),
+(2, 'Paladin', 'Un combattant sacré, entre le guerrier et le magicien', 120, 100, 18, 12, '.Images/classe/paladin.jpg', 5),
+(3, 'Magicien', 'Un utilisateur de magie avec une faible défense mais une grande puissance magique', 80, 150, 5, 10, ./Images/classe/Magician01.jpg', 3),
 (4, 'Voleur', 'Un expert de l\'esquive et des attaques rapides', 100, 30, 18, 20, '/DongeonXplorer/Images/classe/Thief.jpg', 4);
 
 -- --------------------------------------------------------
@@ -585,9 +585,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 -- Déchargement des données de la table `users`
 --
-
-INSERT INTO `users` (`user_id`, `username`, `password`, `users_image`, `created_at`) VALUES
-(1, 'saloquin', '$2y$10$aQTJHZChBfWFYYKgiafeD.7qVRfehpDgiZ..5vi7gTRmdQx4UU5nW', 'https://p4.wallpaperbetter.com/wallpaper/558/222/507/pokemon-pikachu-wallpaper-preview.jpg', '2024-11-28 22:27:34');
 
 -- --------------------------------------------------------
 

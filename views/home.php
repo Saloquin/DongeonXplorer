@@ -30,8 +30,7 @@
             au cœur des mystères du Val Perdu !
         </p>
         <div class="flex justify-center">
-            <a href="chapter"
-                class="bg-accentGreen hover:bg-accentGold text-textMain py-2 px-4 rounded text-center">
+            <a href="chapter" class="bg-accentGreen hover:bg-accentGold text-textMain py-2 px-4 rounded text-center">
                 Commencer l'Aventure
             </a>
         </div>

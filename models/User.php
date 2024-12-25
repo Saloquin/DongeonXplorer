@@ -1,5 +1,5 @@
 <?php
-require_once    'models/character/Player/Hero.php';
+require_once 'models/character/Player/Hero.php';
 class User
 {
 
@@ -12,14 +12,9 @@ class User
     public function __construct($id)
     {
         $this->id = $id;
-        $query = "SELECT username, users_image FROM users WHERE user_id='" . $id . "'";
+        $query = "SELECT username FROM users WHERE user_id='" . $id . "'";
         $tab1 = lireBase(connexionDb(), $query);
 
-
-        $this->pseudo = $tab1[0]['username'];
-        if (!empty($tab1[0]['users_image'])) {
-            $this->image = $tab1[0]['users_image'];
-        }
 
 
         $tab2 = lireBase(connexionDb(), "SELECT count(*) as nb FROM hero WHERE user_id=" . $this->id);

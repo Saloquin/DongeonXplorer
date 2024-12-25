@@ -18,30 +18,31 @@ class Classe
 
     public function __construct($class_id)
     {
-        $query = "SELECT * FROM class WHERE class_id = ".$class_id;
+        $query = "SELECT * FROM class WHERE class_id = " . $class_id;
         $tab = lireBase(connexionDb(), $query);
 
-        
-            $this->id = $tab[0]['class_id'];
-            $this->name = $tab[0]['class_name'];
-            $this->description = $tab[0]['class_description'];
-            $this->base_health = $tab[0]['base_pv'];
-            $this->base_mana = $tab[0]['base_mana'];
-            $this->strength = $tab[0]['strength'];
-            $this->initiative = $tab[0]['initiative'];
-            $this->max_item = $tab[0]['max_items'];
-            $this->image = $tab[0]['class_image'];
 
-        $spellQuery = "SELECT spell_id FROM spell WHERE class_id = ".$this->getId(); ;
+        $this->id = $tab[0]['class_id'];
+        $this->name = $tab[0]['class_name'];
+        $this->description = $tab[0]['class_description'];
+        $this->base_health = $tab[0]['base_pv'];
+        $this->base_mana = $tab[0]['base_mana'];
+        $this->strength = $tab[0]['strength'];
+        $this->initiative = $tab[0]['initiative'];
+        $this->max_item = $tab[0]['max_items'];
+        $this->image = $tab[0]['class_image'];
+
+        $spellQuery = "SELECT spell_id FROM spell WHERE class_id = " . $this->getId();
+        ;
         $spells = lireBase(connexionDb(), $spellQuery);
 
         foreach ($spells as $spell) {
-            $spellObject = new Spell($spell['spell_id']); 
-            $this->spell_list[] = $spellObject; 
+            $spellObject = new Spell($spell['spell_id']);
+            $this->spell_list[] = $spellObject;
         }
 
     }
-    
+
 
     public function getId()
     {

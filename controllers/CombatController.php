@@ -18,12 +18,12 @@ class CombatController
         $hero = $user->getHero();
         $chapter = new Chapter($user->getHero()->getChapter());
 
-        
+
         $monster_id = lireBase(connexionDb(), "SELECT monster_id FROM monster join encounter using (encounter_id) WHERE chapter_id = " . $chapter->getId())[0]['monster_id'];
         $monster = new Monster($monster_id);
 
-        
-        $monsterDamage = $hero->attack($monster); 
+
+        $monsterDamage = $hero->attack($monster);
         $heroDamage = $monster->attack($hero);
 
         $_SESSION['heroDamage'] = $heroDamage;
@@ -70,15 +70,15 @@ class CombatController
         $chapter = new Chapter($user->getHero()->getChapter());
         $consumable = new Consumable($_POST['item_id']);
 
-        if ($consumable->getMana()>0)
+        if ($consumable->getMana() > 0)
             $hero->mana_heal($consumable->getMana());
-        if ($consumable->getSoin()>0)
+        if ($consumable->getSoin() > 0)
             $hero->heal($consumable->getSoin());
         $hero->getInventory()->removeItem($consumable->getItemId());
         $monster_id = lireBase(connexionDb(), "SELECT monster_id FROM monster join encounter using (encounter_id) WHERE chapter_id = " . $chapter->getId())[0]['monster_id'];
         $monster = new Monster($monster_id);
         $heroDamage = $monster->attack($hero);
-        
+
         $_SESSION['heroDamage'] = $heroDamage;
 
         include 'views/combat_view.php';

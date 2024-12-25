@@ -20,7 +20,7 @@ class Inventaire
     public function checkItem($item_id)
     {
         $item_type_query = "SELECT item_type FROM item WHERE item_id = " . $item_id;
-        $item_type_tab=lireBase(connexionDb(), $item_type_query );
+        $item_type_tab = lireBase(connexionDb(), $item_type_query);
         $item_type = $item_type_tab[0]['item_type'];
 
         // Instancier l'objet approprié en fonction du type
@@ -45,7 +45,7 @@ class Inventaire
 
     private function loadItems()
     {
-        
+
         $query = "SELECT item_id, quantity FROM inventory WHERE hero_id = " . $this->hero_id;
         $tab = lireBase(connexionDb(), $query);
         // Charger les items en fonction de leur type et leur quantité
@@ -66,22 +66,22 @@ class Inventaire
     {
         return $this->items;
     }
-    
+
     public function getItem($item_id)
     {
-       foreach ($this->items as $item_entry) {
+        foreach ($this->items as $item_entry) {
             if ($item_entry['item']->getItemId() == $item_id) {
                 return $item_entry['item'];  // Retourner l'objet de l'item
-           }
+            }
         }
-       return null; // Si l'item n'est pas trouvé, retourner null
+        return null; // Si l'item n'est pas trouvé, retourner null
     }
 
     // Ajouter un item à l'inventaire
     public function addItem($item_id)
-    {   
+    {
 
-        if(lireBase(connexionDb(), "select max_items from class join hero using (class_id) where hero_id = " . $this->hero_id)[0]['max_items'] == $this->getTotalItems()){
+        if (lireBase(connexionDb(), "select max_items from class join hero using (class_id) where hero_id = " . $this->hero_id)[0]['max_items'] == $this->getTotalItems()) {
             return;
         }
         // Vérifier si l'item est déjà dans l'inventaire
@@ -149,7 +149,8 @@ class Inventaire
             }
         }
     }
-    function getTotalItems(){
+    function getTotalItems()
+    {
         foreach ($this->items as $item_entry) {
             $total += $item_entry['quantity'];
         }

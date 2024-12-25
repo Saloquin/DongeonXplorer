@@ -1,4 +1,4 @@
-<?php 
+<?php
 // autoload.php
 spl_autoload_register(function ($class) {
     $directories = array(

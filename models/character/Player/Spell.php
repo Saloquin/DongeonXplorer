@@ -1,6 +1,7 @@
 <?php
 include_once "models/fonction_utilitaire.php";
-class Spell {
+class Spell
+{
     private $id;
     private $name;
     private $description;
@@ -8,48 +9,56 @@ class Spell {
     private $manaCost;
     private $learningLevel;
 
-    public function __construct($spell_id) {
+    public function __construct($spell_id)
+    {
         $query = "SELECT spell_name, spell_description, dice_count, mana_cost, learning_level 
                   FROM spell WHERE spell_id = $spell_id";
         $result = lireBase(connexionDb(), $query);
-            $this->id = $spell_id;
-            $this->name = $result[0]['spell_name'];
-            $this->description = $result[0]['spell_description'];
-            $this->diceCount = $result[0]['dice_count'];
-            $this->manaCost = $result[0]['mana_cost'];
-            $this->learningLevel = $result[0]['learning_level'];
+        $this->id = $spell_id;
+        $this->name = $result[0]['spell_name'];
+        $this->description = $result[0]['spell_description'];
+        $this->diceCount = $result[0]['dice_count'];
+        $this->manaCost = $result[0]['mana_cost'];
+        $this->learningLevel = $result[0]['learning_level'];
     }
 
     // Getters
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
-    public function getDiceCount() {
+    public function getDiceCount()
+    {
         return $this->diceCount;
     }
 
-    public function getManaCost() {
+    public function getManaCost()
+    {
         return $this->manaCost;
     }
 
-    public function getLearningLevel() {
+    public function getLearningLevel()
+    {
         return $this->learningLevel;
     }
 
-    
-    public function cast($hero) {
+
+    public function cast($hero)
+    {
         $hero->setMana($hero->getMana() - $this->manaCost);
         $damage = rollDice($this->diceCount) + $hero->getStrength();
-        return $damage; 
+        return $damage;
     }
 }
 

@@ -73,7 +73,7 @@
                 </p>
                 <div id="hero-image-container" class="w-full h-auto rounded-lg mb-4 items-center flex justify-center">
                 <img src="<?php echo htmlspecialchars($user->getImage()); ?>" alt="Image du héro" id="hero-image"
-                class="w-full h-auto rounded-lg mb-4 max-w-xl max-h-xl">
+                class="w-[400px] h-[400px] max-w-[400px] max-h-[400px] rounded-lg mb-4 pt-4">
                 <div id="hero-damage-text" class="damage-text"></div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     <div id="consumablesPopup"
                         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden transition-opacity duration-300 z-50">
                         <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-1/2 lg:w-1/3">
-                            <h2 class="text-2xl font-bold mb-4">Consommables</h2>
+                            <h2 class="text-2xl font-bold mb-4 text-black">Consommables</h2>
                             <div class="grid grid-cols-1 gap-4">
                                 <?php foreach ($hero->getInventory()->getConsommables() as $item): ?>
                                     <form method="POST" action="use_item" class="relative group w-full">
@@ -183,7 +183,7 @@
                     </p>
                     <div id="monster-image-container" class="w-full h-auto rounded-lg mb-4 items-center flex justify-center">
                     <img src="<?php echo htmlspecialchars($monster->getImage()); ?>" alt="Image du monstre" id="monster-image"
-                    class="w-full h-auto rounded-lg mb-4 max-w-xl max-h-xl">
+                    class="w-[400px] h-[400px] max-w-[400px] max-h-[400px] rounded-lg mb-4 pt-4">
                     <div id="monster-damage-text" class="damage-text"></div>
                 </div>
 
