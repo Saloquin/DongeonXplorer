@@ -62,7 +62,7 @@ Le projet utilise les technologies suivantes :
 
 1. Clonez le repository :
    ```bash
-   git clone https://github.com/nom-utilisateur/DungeonXplorer.git
+   git clone https://github.com/Saloquin/DongeonXplorer.git
    ```
 2. Configurez votre serveur local pour exécuter PHP et MySQL.
 3. Importez le schéma de la base de données depuis le dossier `/bdd/dongeon.sql`.

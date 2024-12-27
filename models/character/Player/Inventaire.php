@@ -81,9 +81,7 @@ class Inventaire
     public function addItem($item_id)
     {
 
-        if (lireBase(connexionDb(), "select max_items from class join hero using (class_id) where hero_id = " . $this->hero_id)[0]['max_items'] == $this->getTotalItems()) {
-            return;
-        }
+        
         // Vérifier si l'item est déjà dans l'inventaire
         foreach ($this->items as &$item_entry) {
             if ($item_entry['item']->getItemId() == $item_id) {
@@ -102,6 +100,32 @@ class Inventaire
 
         // Insérer dans la base de données
         $query = "INSERT INTO inventory (hero_id, item_id, quantity) VALUES (" . $this->hero_id . ", " . $item_id . ", 1)";
+        modifieBase(connexionDb(), $query);
+    }
+
+
+    public function addMultipleItem($item_id,$nb)
+    {
+
+        
+        // Vérifier si l'item est déjà dans l'inventaire
+        foreach ($this->items as &$item_entry) {
+            if ($item_entry['item']->getItemId() == $item_id) {
+                // L'item est déjà dans l'inventaire, on incrémente sa quantité
+                $item_entry['quantity']+=$nb;
+                // Mettre à jour dans la base de données
+                $query = "UPDATE inventory SET quantity = quantity + '.$nb.' WHERE hero_id = " . $this->hero_id . " AND item_id = " . $item_id;
+                modifieBase(connexionDb(), $query);
+                return;
+            }
+        }
+
+        // Si l'item n'est pas dans l'inventaire, l'ajouter avec une quantité de 1
+        $new_item = $this->checkItem($item_id);
+        $this->items[] = ['item' => $new_item, 'quantity' => $nb];
+
+        // Insérer dans la base de données
+        $query = "INSERT INTO inventory (hero_id, item_id, quantity) VALUES (" . $this->hero_id . ", " . $item_id . ", ".$nb.")";
         modifieBase(connexionDb(), $query);
     }
 
@@ -151,6 +175,7 @@ class Inventaire
     }
     function getTotalItems()
     {
+        $total=0;
         foreach ($this->items as $item_entry) {
             $total += $item_entry['quantity'];
         }

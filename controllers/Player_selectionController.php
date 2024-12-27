@@ -40,6 +40,12 @@ class Player_selectionController
         }
         modifieBase2($db, $sql);
         $user->setHero($user->getId());
+        $hero = $user->getHero();
+        $inventaire = $hero->getInventory();
+            $inventaire->addMultipleItem(47,5);
+            $inventaire->addMultipleItem(43,5);
+        
+        
         header('Location: home');
         exit();
     }

@@ -12,20 +12,40 @@ class RegisterController
     {
         $username = htmlspecialchars($_POST['username']);
         $password = htmlspecialchars($_POST['password']);
-        $sql_verif = "select count(*)as nb from Users where username = '" . $username . "'";
+        
+        // Utilisation de la requête préparée
         $db = connexionDb();
-        $tab = lireBase($db, $sql_verif);
-        if ($tab[0]['nb'] > 0) {
-            header('Location:  register');
-            $_SESSION['error'] = "Ce Pseudo est déja utilisé !";
-            return;
+        $sql_verif = "SELECT COUNT(*) AS nb FROM users WHERE username = :username";
+        $stmt = $db->prepare($sql_verif);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $tab = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($tab['nb'] > 0) {
+            // Utilisation de la session pour afficher l'erreur
+            $_SESSION['error'] = "Ce Pseudo est déjà utilisé !";
+            header('Location: register');
+            exit();
         } else {
-            $sql = "INSERT INTO users (username, password) 
-            VALUES ('" . $username . "', '" . password_hash($password, PASSWORD_DEFAULT) . "')";    
-            modifieBase($db, $sql);
-            $_SESSION['user'] = lireBase(connexionDb(), "select user_id from users where username = '" . $username . "'")[0]["user_id"];
-            header('Location:  profil');
+            // Insertion du nouvel utilisateur
+            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $password_hash, PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Récupérer l'ID de l'utilisateur pour la session
+            $sql_user = "SELECT user_id FROM users WHERE username = :username";
+            $stmt = $db->prepare($sql_user);
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $_SESSION['user'] = $user['user_id'];
+
+            header('Location: profil');
+            exit();
         }
-        exit();
     }
 }
+?>
